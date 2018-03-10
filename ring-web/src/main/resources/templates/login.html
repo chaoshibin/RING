@@ -56,7 +56,7 @@
         </div>
         <!-- /.col -->
         <div class="col-xs-4">
-          <button type="button" class="btn btn-primary btn-block btn-flat">登录</button>
+            <button type="button" class="btn btn-primary btn-block btn-flat" onclick="login()">登录</button>
         </div>
         <!-- /.col -->
       </div>
@@ -95,13 +95,15 @@
                 this.src = "captcha.jpg?t=" + $.now();
             },
             login: function () {
+                alert("登录")
                 $.ajax({
                     type: "POST",
-                    url: baseURL + "sys/login",
+                    url: "login",
                     dataType: "json",
                     contentType: "application/json",
                     data: JSON.stringify(vm.form),
                     success: function(r){
+                        alert()
                         if(r.code == 0){//登录成功
                             localStorage.setItem("token", r.token);
                             parent.location.href ='index.html';

@@ -39,4 +39,6 @@ public interface Service<entity, example> {
     List<entity> queryPageByExample(example example, int pageNum, int pageSize, String orderBy);
 
     int batchInsert(List<entity> list);
+
+    List<entity> selectAll(entity entity);
 }

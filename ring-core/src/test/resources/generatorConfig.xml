@@ -15,8 +15,8 @@
         <property name="selectAllOrderByClause" value="create_time desc"/>
         <!--<plugin type="org.mybatis.generator.plugins.SerializablePlugin" />-->
 
-        <plugin type="org.mybatis.generator.plugins.EqualsHashCodePlugin"/>
-        <plugin type="org.mybatis.generator.plugins.ToStringPlugin"/>
+        <!--<plugin type="org.mybatis.generator.plugins.EqualsHashCodePlugin"/>-->
+        <!--<plugin type="org.mybatis.generator.plugins.ToStringPlugin"/>-->
 
         <!-- mybatis generator 重写插件 -->
         <plugin type="org.mybatis.generator.plugins.CustomSerializablePlugin">
@@ -77,7 +77,32 @@
 
         <!-- 要对哪些数据表进行生成操作，必须要有一个 -->
 
-        <table schema="jrquser" tableName="sys_user" domainObjectName="SysUser"
+        <table tableName="sys_user" domainObjectName="SysUser"
+               enableCountByExample="true" enableUpdateByExample="true"
+               enableDeleteByExample="true" enableSelectByExample="true"
+               selectByExampleQueryId="true">
+        </table>
+        <table tableName="sys_log" domainObjectName="SysLog"
+               enableCountByExample="true" enableUpdateByExample="true"
+               enableDeleteByExample="true" enableSelectByExample="true"
+               selectByExampleQueryId="true">
+        </table>
+        <table tableName="sys_menu" domainObjectName="SysMenu"
+               enableCountByExample="true" enableUpdateByExample="true"
+               enableDeleteByExample="true" enableSelectByExample="true"
+               selectByExampleQueryId="true">
+        </table>
+        <table tableName="sys_role" domainObjectName="SysRole"
+               enableCountByExample="true" enableUpdateByExample="true"
+               enableDeleteByExample="true" enableSelectByExample="true"
+               selectByExampleQueryId="true">
+        </table>
+        <table tableName="sys_role_menu" domainObjectName="SysRoleMenu"
+               enableCountByExample="true" enableUpdateByExample="true"
+               enableDeleteByExample="true" enableSelectByExample="true"
+               selectByExampleQueryId="true">
+        </table>
+        <table tableName="sys_user_role" domainObjectName="SysUserRole"
                enableCountByExample="true" enableUpdateByExample="true"
                enableDeleteByExample="true" enableSelectByExample="true"
                selectByExampleQueryId="true">

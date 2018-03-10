@@ -1,11 +1,16 @@
 package com.ring.core.config.shiro;
 
-import cn.hutool.log.StaticLog;
-import com.ring.core.mapper.SysUserExMapper;
-import org.apache.shiro.authc.AuthenticationException;
-import org.apache.shiro.authc.AuthenticationInfo;
-import org.apache.shiro.authc.AuthenticationToken;
-import org.apache.shiro.authc.UsernamePasswordToken;
+import cn.hutool.log.Log;
+import cn.hutool.log.LogFactory;
+import com.ring.api.model.sys.SysMenu;
+import com.ring.api.model.sys.SysRole;
+import com.ring.api.model.sys.SysUser;
+import com.ring.common.exception.ArgumentException;
+import com.ring.common.util.Constant;
+import com.ring.core.service.sys.SysMenuService;
+import com.ring.core.service.sys.SysUserService;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
@@ -13,13 +18,20 @@ import org.apache.shiro.subject.PrincipalCollection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+
 /**
  * @author chaoshibin
  */
 @Component
 public class ShiroRealm extends AuthorizingRealm {
+    protected static final Log LOG = LogFactory.get();
     @Autowired
-    private SysUserExMapper userExMapper;
+    private SysUserService userService;
+    @Autowired
+    private SysMenuService menuService;
 
     /**
      * 权限认证，为当前登录的Subject授予角色和权限
@@ -30,53 +42,46 @@ public class ShiroRealm extends AuthorizingRealm {
      */
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
-        StaticLog.debug("执行Shiro权限认证");
-
-        //获取当前登录输入的用户名，等价于(String) principalCollection.fromRealm(getName()).iterator().next();
-        String loginName = (String) super.getAvailablePrincipal(principalCollection);
-        return new SimpleAuthorizationInfo();
-        //到数据库查是否有此对象
-        /*SysUser user = userExMapper. (loginName);
-        // 实际项目中，这里可以根据实际情况做缓存，如果不做，Shiro自己也是有时间间隔机制，2分钟内不会重复执行该方法
-        if (user != null) {
-            //权限信息对象info,用来存放查出的用户的所有的角色（role）及权限（permission）
-            SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo();
-            //List<SysMenu> menuList = (List<SysMenu>)SecurityUtils.getSubject().getSession().getAttribute(Constants.CURRENT_ADMIN_PERMISSION);
-            //用户的角色集合
-            //用户的角色对应的所有权限，如果只使用角色定义访问权限，下面的四行可以不要
-            List<SysRole> roleList = user.getRoles();
-            boolean isAdministrator = false;
-            List<Integer> roleIdList = new ArrayList<>();
-            for (SysRole role : roleList) {
-                if (role.getId() == Constants.ANMIN_ID) {
-                    isAdministrator = true;
-                }
-                roleIdList.add(role.getId());
-                authorizationInfo.addRole(role.getName());
-            }
-            List<SysMenu> menuList = new ArrayList<>();
-            if (isAdministrator) {
-                menuList = menuService.queryAll(new SysMenuQO());
-            } else {
-                if (roleIdList.size() > 0) {
-                    menuList = menuService.queryByRoleIds(roleIdList);
-                }
-            }
-            menuList.forEach(menu -> {
-                if (StringUtil.isNotEmpty(menu.getPermission())) {
-                    authorizationInfo.addStringPermission(menu.getPermission());
-                }
-            });
-            // 或者按下面这样添加
-            //添加一个角色,不是配置意义上的添加,而是证明该用户拥有admin角色
-//            simpleAuthorInfo.addRole("admin");
-            //添加权限
-//            simpleAuthorInfo.addStringPermission("admin:manage");
-//            logger.info("已为用户[mike]赋予了[admin]角色和[admin:manage]权限");
-            return authorizationInfo;
+        LOG.debug("执行shiro权限认证");
+        //获取当前登录输入的用户名
+        String username = (String) super.getAvailablePrincipal(principalCollection);
+        SysUser user = userService.getByUsername(username);
+        /* 实际项目中，这里可以根据实际情况做缓存，如果不做，Shiro自己也是有时间间隔机制，2分钟内不会重复执行该方法 */
+        if (user == null) {
+            /** 返回null的话，就会导致任何用户访问被拦截的请求时，都会自动跳转到unauthorizedUrl指定的地址 */
+            return null;
         }
-        // 返回null的话，就会导致任何用户访问被拦截的请求时，都会自动跳转到unauthorizedUrl指定的地址
-        return null;*/
+        /* 权限信息对象info,用来存放查出的用户的所有的角色（role）及权限（permission）*/
+        SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo();
+        //List<SysMenu> menuList = (List<SysMenu>)SecurityUtils.getSubject().getSession().getAttribute(Constants.CURRENT_ADMIN_PERMISSION);
+        List<SysRole> roleList = user.getRoles();
+        boolean isAdministrator = false;
+        List<Long> roleIdList = new ArrayList<>();
+        for (SysRole role : roleList) {
+            roleIdList.add(role.getId());
+            authorizationInfo.addRole(role.getRoleName());
+            if (role.getId().equals(Constant.SUPER_ADMIN_ID)) {
+                isAdministrator = true;
+                break;
+            }
+        }
+        List<SysMenu> menuList = new ArrayList<>();
+        if (isAdministrator) {
+            menuList = menuService.selectAll(new SysMenu());
+        } else {
+            if (roleIdList.size() > 0) {
+                Set<SysMenu> menuSet = menuService.getByRoleIds(roleIdList);
+                for (SysMenu sysMenu : menuSet) {
+                    menuList.add(sysMenu);
+                }
+            }
+        }
+        menuList.forEach(menu -> {
+            if (StringUtils.isNotEmpty(menu.getPermission())) {
+                authorizationInfo.addStringPermission(menu.getPermission());
+            }
+        });
+        return authorizationInfo;
     }
 
     /**
@@ -85,14 +90,13 @@ public class ShiroRealm extends AuthorizingRealm {
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken)
             throws AuthenticationException {
-        //UsernamePasswordToken对象用来存放提交的登录信息
+        /*UsernamePasswordToken对象用来存放提交的登录信息*/
         UsernamePasswordToken token = (UsernamePasswordToken) authenticationToken;
-        //查出是否有此用户
-      /*  SysUser user = userMapper.findByName(token.getUsername());
-        if (user != null) {
-            // 若存在，将此用户存放到登录认证info中，无需自己做密码对比，Shiro会为我们进行密码对比校验
-            return new SimpleAuthenticationInfo(user.getLoginName(), user.getPassword(), getName());
-        }*/
-        return null;
+        SysUser user = userService.getByUsername(token.getUsername());
+        if (user == null) {
+            throw new ArgumentException("用户不存在");
+        }
+         /* 若存在，将此用户存放到登录认证info中，无需自己做密码对比，Shiro会为我们进行密码对比校验 */
+        return new SimpleAuthenticationInfo(user.getUsername(), user.getPassword(), getName());
     }
 }

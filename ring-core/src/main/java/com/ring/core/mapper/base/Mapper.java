@@ -1,4 +1,4 @@
-package com.ring.core.mapper;
+package com.ring.core.mapper.base;
 
 import org.apache.ibatis.annotations.Param;
 
@@ -15,6 +15,7 @@ import java.util.Map;
  * @since 1.0.0
  */
 public interface Mapper<entity, example> {
+
     int countByExample(example example);
 
     int deleteByExample(example example);
@@ -40,4 +41,6 @@ public interface Mapper<entity, example> {
     List<entity> selectByMap(Map<String, Object> map);
 
     int batchInsert(@Param("list") List<entity> list);
+
+    List<entity> selectAll(entity example);
 }

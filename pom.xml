@@ -45,6 +45,8 @@
         <zkclient.version>0.10</zkclient.version>
         <guava.version>22.0</guava.version>
         <commons-codec.version>1.10</commons-codec.version>
+        <kaptcha.version>0.0.9</kaptcha.version>
+        <commons.io.version>2.5</commons.io.version>
     </properties>
     <dependencyManagement>
         <dependencies>
@@ -131,6 +133,11 @@
                 <version>${hutool.version}</version>
             </dependency>
             <dependency>
+                <groupId>cn.hutool</groupId>
+                <artifactId>hutool-http</artifactId>
+                <version>${hutool.version}</version>
+            </dependency>
+            <dependency>
                 <groupId>org.apache.commons</groupId>
                 <artifactId>commons-collections4</artifactId>
                 <version>${commons-collections4.version}</version>
@@ -160,6 +167,16 @@
                 <groupId>commons-codec</groupId>
                 <artifactId>commons-codec</artifactId>
                 <version>${commons-codec.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.github.axet</groupId>
+                <artifactId>kaptcha</artifactId>
+                <version>${kaptcha.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>commons-io</groupId>
+                <artifactId>commons-io</artifactId>
+                <version>${commons.io.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

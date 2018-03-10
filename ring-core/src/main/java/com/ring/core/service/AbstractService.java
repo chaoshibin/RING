@@ -3,7 +3,7 @@ package com.ring.core.service;
 import cn.hutool.log.Log;
 import cn.hutool.log.LogFactory;
 import com.github.pagehelper.PageHelper;
-import com.ring.core.mapper.Mapper;
+import com.ring.core.mapper.base.Mapper;
 import org.apache.commons.collections4.ListUtils;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
@@ -119,5 +119,10 @@ public abstract class AbstractService<entity, example> implements Service<entity
             result += getMapper().batchInsert(element);
         }
         return result;
+    }
+
+    @Override
+    public List<entity> selectAll(entity entity) {
+        return getMapper().selectAll(entity);
     }
 }

@@ -16,8 +16,8 @@ import javax.servlet.http.HttpServletResponse;
  * @version 1.0.0
  * @since 1.0.0
  */
-public abstract class BaseController {
-    private static final Log LOG = LogFactory.get();
+public abstract class AbstractController {
+    protected static final Log LOG = LogFactory.get();
 
     public HttpServletRequest getRequest() {
         return ServletRequestContextHolder.getRequest();
