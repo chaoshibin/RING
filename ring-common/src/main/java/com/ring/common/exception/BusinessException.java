@@ -1,4 +1,4 @@
-package com.ring.common.util;
+package com.ring.common.exception;
 
 import com.ring.api.constant.ResultEnum;
 
@@ -16,17 +16,14 @@ public final class BusinessException extends RuntimeException {
 
     private Integer code;
 
-    private String msg;
-
-
-    public BusinessException(ResultEnum result) {
-        this.code = result.getCode();
-        this.msg = result.getMsg();
+    public BusinessException(Integer code, String message) {
+        super(message);
+        this.code = code;
     }
 
-    public BusinessException(Integer code, String msg) {
-        this.code = code;
-        this.msg = msg;
+    public BusinessException(ResultEnum result) {
+        super(result.getMsg());
+        this.code = result.getCode();
     }
 
     public BusinessException() {
@@ -51,9 +48,5 @@ public final class BusinessException extends RuntimeException {
 
     public Integer getCode() {
         return code;
-    }
-
-    public String getMsg() {
-        return msg;
     }
 }

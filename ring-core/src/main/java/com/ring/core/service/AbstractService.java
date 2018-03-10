@@ -20,7 +20,7 @@ import java.util.List;
  * @since 1.0.0
  */
 public abstract class AbstractService<entity, example> implements Service<entity, example> {
-    private static final Log LOG = LogFactory.get();
+    protected static final Log LOG = LogFactory.get();
     /**
      * 分页默认大小
      */

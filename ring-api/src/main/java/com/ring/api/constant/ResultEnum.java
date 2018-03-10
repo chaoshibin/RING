@@ -12,7 +12,7 @@ package com.ring.api.constant;
 public enum ResultEnum {
 
     OK(200, "success"),
-    LACK_PARAM(50005, "success");
+    LACK_PARAM(50005, "参数不合法");
 
     private int code;
     private String msg;

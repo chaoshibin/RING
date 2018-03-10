@@ -21,7 +21,7 @@
     <!--<contextName>userapi</contextName>-->
     <!--<property name="LOG_PATH" value="logs"/>-->
     <!--配置属性，通过 ${name} 方式调用-->
-    <property name="LOG_PATH" value="logs"/>
+    <property name="LOG_PATH" value="E:/ring/logs"/>
 
     <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
         <!--encoder 默认配置为PatternLayoutEncoder-->
@@ -49,8 +49,8 @@
             <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
                 <maxFileSize>200MB</maxFileSize>
             </timeBasedFileNamingAndTriggeringPolicy>
-            <!--  保留30天日志 -->
-            <maxHistory>30</maxHistory>
+            <!--  保留60天日志 -->
+            <maxHistory>60</maxHistory>
         </rollingPolicy>
         <!-- 追加方式记录日志 -->
         <append>true</append>
@@ -81,8 +81,8 @@
             <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
                 <maxFileSize>200MB</maxFileSize>
             </timeBasedFileNamingAndTriggeringPolicy>
-            <!--  保留30天日志 -->
-            <maxHistory>30</maxHistory>
+            <!--  保留60天日志 -->
+            <maxHistory>60</maxHistory>
         </rollingPolicy>
         <!-- 追加方式记录日志 -->
         <append>true</append>
@@ -113,8 +113,8 @@
             <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
                 <maxFileSize>200MB</maxFileSize>
             </timeBasedFileNamingAndTriggeringPolicy>
-            <!--  保留30天日志 -->
-            <maxHistory>30</maxHistory>
+            <!--  保留60天日志 -->
+            <maxHistory>60</maxHistory>
         </rollingPolicy>
         <!-- 追加方式记录日志 -->
         <append>true</append>
@@ -146,8 +146,8 @@
             <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
                 <maxFileSize>200MB</maxFileSize>
             </timeBasedFileNamingAndTriggeringPolicy>
-            <!--  保留30天日志 -->
-            <maxHistory>30</maxHistory>
+            <!--  保留60天日志 -->
+            <maxHistory>60</maxHistory>
         </rollingPolicy>
         <!-- 追加方式记录日志 -->
         <append>true</append>
