@@ -3,7 +3,7 @@ package com.ring.common.exception;
 import com.ring.api.constant.ResultEnum;
 
 /**
- * 功能描述: 业务异常
+ * 功能描述: RPC异常
  * <p/>
  *
  * @author CHAO 新增日期：2018/2/9
@@ -11,17 +11,17 @@ import com.ring.api.constant.ResultEnum;
  * @version 1.0.0
  * @since 1.0.0
  */
-public final class BusinessException extends RuntimeException {
+public final class RpcException extends RuntimeException {
     private static final long serialVersionUID = 1L;
 
     private Integer code;
 
-    public BusinessException(Integer code, String message) {
+    public RpcException(Integer code, String message) {
         super(message);
         this.code = code;
     }
 
-    public BusinessException(ResultEnum result) {
+    public RpcException(ResultEnum result) {
         super(result.getMsg());
         this.code = result.getCode();
     }
