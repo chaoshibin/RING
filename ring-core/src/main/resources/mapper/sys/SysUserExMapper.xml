@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ring.core.mapper.sys.SysUserExMapper">
+  <resultMap id="BaseResultMapEx" type="com.ring.api.model.sys.SysUser"
+             extends="com.ring.core.mapper.base.sys.SysUserMapper.BaseResultMap">
+    <association property="roles" column="id"
+                 select="com.ring.core.mapper.sys.SysUserRoleExMapper.getUserRolesByUserId">
+    </association>
+  </resultMap>
+  <select id="getByUsername" parameterType="java.lang.String"
+          resultMap="com.ring.core.mapper.base.sys.SysUserMapper.BaseResultMap">
+    select
+    <include refid="com.ring.core.mapper.base.sys.SysUserMapper.Base_Column_List" />
+    from sys_user
+    where username = #{username,jdbcType=VARCHAR}
+  </select>
+</mapper>

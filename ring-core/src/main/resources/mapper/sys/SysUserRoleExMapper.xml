@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ring.core.mapper.sys.SysUserRoleExMapper">
+    <select id="getRolesByUserId" parameterType="java.lang.Integer"
+            resultMap="com.ring.core.mapper.base.sys.SysUserRoleMapper.BaseResultMap">
+        select
+        <include refid="com.ring.core.mapper.base.sys.SysUserRoleMapper.Base_Column_List"/>
+        from sys_user_role
+        where user_id = #{userId,jdbcType=BIGINT}
+    </select>
+</mapper>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ring.core.mapper.sys.SysMenuExMapper">
+    <select id="getByRoleIds" parameterType="java.lang.Integer"
+            resultMap="com.ring.core.mapper.base.sys.SysMenuMapper.BaseResultMap">
+        select
+        <include refid="com.ring.core.mapper.base.sys.SysMenuMapper.Base_Column_List"/>
+        from sys_menu a LEFT JOIN sys_role_menu b ON a.id = b.role_id
+        where b.role_id IN
+        <foreach collection="list" item="item" open="(" close=")" separator=",">
+            {item}
+        </foreach>
+    </select>
+</mapper>
