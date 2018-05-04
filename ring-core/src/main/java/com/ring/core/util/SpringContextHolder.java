@@ -1,17 +1,17 @@
-package com.ring.web.util;
+package com.ring.core.util;
 
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
-import org.springframework.stereotype.Component;
+import org.springframework.context.annotation.Configuration;
 
 import java.util.Map;
 
 /**
  * @author chaoshibin
  */
-@Component
-public final class AppUtil implements ApplicationContextAware {
+@Configuration
+public class SpringContextHolder implements ApplicationContextAware {
     private static ApplicationContext applicationContext;
 
     @Override

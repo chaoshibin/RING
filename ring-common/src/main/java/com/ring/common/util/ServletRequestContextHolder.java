@@ -33,7 +33,7 @@ public final class ServletRequestContextHolder {
     }
 
 
-    public static String getIp() {
+    public static String getRemoteIp() {
         return ServletRequestContextHolder.getRequest().getRemoteHost();
     }
 

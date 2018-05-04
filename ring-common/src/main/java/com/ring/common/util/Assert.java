@@ -14,14 +14,14 @@ import org.apache.commons.lang3.StringUtils;
  * @since 1.0.0
  */
 public final class Assert {
-    public static <T> void isNull(T object, String argument) throws NullPointerException {
+    public static <T> void isNull(T object, String argument) {
         if (object == null) {
             throw new ArgumentException(StrUtil.format("[Assertion failed] - this argument [{}] is required; it must not be null", argument));
         }
     }
 
-    public static void isEmpty(String text, String argument) throws IllegalArgumentException {
-        if (StringUtils.isEmpty(text)) {
+    public static void isEmpty(String text, String argument) {
+        if (StringUtils.isBlank(text)) {
             throw new ArgumentException(StrUtil.format("[Assertion failed] - this String argument [{}]  must have length; it must not be null or empty", argument));
         }
     }

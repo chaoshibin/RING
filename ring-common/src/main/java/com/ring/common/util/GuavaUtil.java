@@ -13,10 +13,10 @@ import java.util.Map;
  * @version 1.0.0
  * @since 1.0.0
  */
-public final class GuavaStrUtil {
+public final class GuavaUtil {
     private static final Joiner.MapJoiner JOINER = Joiner.on("&").withKeyValueSeparator("=").useForNull("");
 
-    public static String getParam(Map<?, ?> map) {
+    public static String getHttpParam(Map<?, ?> map) {
         return JOINER.join(map);
     }
 

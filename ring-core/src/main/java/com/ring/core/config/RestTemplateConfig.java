@@ -40,7 +40,7 @@ public class RestTemplateConfig {
     /**
      * 同路由的并发数
      */
-    private int defaultMaxPerRoute = new Double(maxTotal * 0.8).intValue();
+    private int defaultMaxPerRoute = new Double(maxTotal * 0.6).intValue();
 
     @Bean
     @ConditionalOnMissingBean({RestOperations.class, RestTemplate.class})
