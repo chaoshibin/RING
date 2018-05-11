@@ -1,8 +1,6 @@
 package com.ring.core.config.spring;
 
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
+import com.ring.common.util.JsonUtil;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.MediaType;
@@ -13,7 +11,6 @@ import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.view.BeanNameViewResolver;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,13 +41,7 @@ public class WebMvcConfigurer extends WebMvcConfigurerAdapter {
     public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
 
         MappingJackson2HttpMessageConverter converter = new MappingJackson2HttpMessageConverter();
-        ObjectMapper objectMapper = new ObjectMapper();
-        //空对象不抛异常 e.g. handler{ }
-        objectMapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
-        //解析JSON时忽略未知属性
-        objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-        objectMapper.setDateFormat(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"));
-        converter.setObjectMapper(objectMapper);
+        converter.setObjectMapper(JsonUtil.getObjectMapper());
         converters.add(converter);
         // 设置中文编码格式
         List<MediaType> list = new ArrayList<>();
