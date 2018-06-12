@@ -1,6 +1,5 @@
 framework:
     swagger-open: true #开启接口
-
 spring:
     datasource:
         type: com.alibaba.druid.pool.DruidDataSource
