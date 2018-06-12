@@ -1,4 +1,4 @@
-package com.ring.common.util;
+package com.ring.core.util;
 
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;

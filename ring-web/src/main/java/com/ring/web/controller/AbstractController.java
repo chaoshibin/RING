@@ -2,7 +2,7 @@ package com.ring.web.controller;
 
 import cn.hutool.log.Log;
 import cn.hutool.log.LogFactory;
-import com.ring.common.util.ServletRequestContextHolder;
+import com.ring.core.util.ServletRequestContextHolder;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
