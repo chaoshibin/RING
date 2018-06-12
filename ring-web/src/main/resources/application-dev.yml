@@ -1,6 +1,15 @@
 framework:
     swagger-open: true #开启接口
-
+    http:
+       socketTimeout: 30000
+       connectTimeout: 30000
+       connectionRequestTimeout: 200
+       maxTotal: 1000
+    executor:
+       corePoolSize: 10
+       maxPoolSize: 100
+       queueCapacity: 10000
+       keepAlive: 60
 spring:
     datasource:
         type: com.alibaba.druid.pool.DruidDataSource

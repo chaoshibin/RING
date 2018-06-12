@@ -2,13 +2,11 @@ package com.ring.core.config;
 
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.config.RequestConfig;
-import org.apache.http.impl.client.DefaultHttpRequestRetryHandler;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.http.client.ClientHttpRequestFactory;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.http.converter.HttpMessageConverter;
@@ -90,7 +88,7 @@ public class RestTemplateConfig {
                 .setDefaultRequestConfig(requestConfig)
                 .setConnectionManager(connectionManager)
                 //设置重试次数，默认三次未开启
-                .setRetryHandler(new DefaultHttpRequestRetryHandler(2, true))
+                //.setRetryHandler(new DefaultHttpRequestRetryHandler(2, true))
                 .build();
     }
 }

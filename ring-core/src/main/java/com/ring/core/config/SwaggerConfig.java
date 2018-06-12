@@ -23,18 +23,17 @@ public class SwaggerConfig extends WebMvcConfigurerAdapter {
         return new Docket(DocumentationType.SWAGGER_2)
                 .apiInfo(apiInfo())
                 .select()
-                .apis(RequestHandlerSelectors.withMethodAnnotation(ApiOperation.class))           //加了ApiOperation注解的方法，生成接口文档
-                //.apis(RequestHandlerSelectors.basePackage("io.renren.modules.job.controller"))  //包下的类，生成接口文档
+                .apis(RequestHandlerSelectors.withMethodAnnotation(ApiOperation.class))
                 .paths(PathSelectors.any())
                 .build();
     }
 
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-                .title("人人开源")
-                .description("renren-fast文档")
-                .termsOfServiceUrl("http://www.renren.io")
-                .version("1.3")
+                .title("RING")
+                .description("在线接口文档")
+                .termsOfServiceUrl("http://www.baidu.com")
+                .version("1.0")
                 .build();
     }
 
