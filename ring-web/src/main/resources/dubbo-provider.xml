@@ -21,6 +21,8 @@
 	<!-- 用dubbo协议在此端口暴露服务 -->
 	<dubbo:protocol name="dubbo" port="${dubbo.protocol.port}"/>
 
+	<!--全局超时时间-->
+	<dubbo:provider timeout="${dubbo.service.timeout}" />
 <!--	<bean id="helloService" class="com.ring.web.service.HelloServiceImpl"/>
 	&lt;!&ndash; 声明需要暴露的服务接口 &ndash;&gt;
 	<dubbo:service ref="helloService" interface="com.ring.common.service.HelloService" timeout="${dubbo.service.timeout}"
