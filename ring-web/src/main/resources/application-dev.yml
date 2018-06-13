@@ -9,7 +9,7 @@ framework:
        corePoolSize: 10
        maxPoolSize: 100
        queueCapacity: 10000
-       keepAlive: 60
+       keepAliveSeconds: 60
 spring:
     datasource:
         type: com.alibaba.druid.pool.DruidDataSource

@@ -36,7 +36,7 @@ public class TaskExecutorConfig {
     /**
      * 存活时间（秒）
      */
-    private int keepAlive = 60;
+    private int keepAliveSeconds = 60;
 
 
     /**
@@ -57,7 +57,7 @@ public class TaskExecutorConfig {
          *CALLER_RUNS：不在线程池中执行任务，而是由调用者所在的线程来执行
          */
         executor.setRejectedExecutionHandler(new ThreadPoolExecutor.CallerRunsPolicy());
-        executor.setKeepAliveSeconds(keepAlive);
+        executor.setKeepAliveSeconds(keepAliveSeconds);
         executor.initialize();
         return executor;
     }
