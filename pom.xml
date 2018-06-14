@@ -47,6 +47,7 @@
         <commons-codec.version>1.10</commons-codec.version>
         <kaptcha.version>0.0.9</kaptcha.version>
         <commons.io.version>2.5</commons.io.version>
+        <lombok.version>1.16.20</lombok.version>
     </properties>
     <dependencyManagement>
         <dependencies>
@@ -177,6 +178,11 @@
                 <groupId>commons-io</groupId>
                 <artifactId>commons-io</artifactId>
                 <version>${commons.io.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
+                <version>${lombok.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
