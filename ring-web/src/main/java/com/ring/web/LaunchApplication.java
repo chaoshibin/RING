@@ -5,13 +5,12 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.ImportResource;
-import org.springframework.web.bind.annotation.RestController;
 
 /**
  * @author chaoshibin
  */
 @ImportResource({"classpath:base.xml"})
-@ComponentScan(basePackages = {"com.ring.web","com.ring.core"})
+@ComponentScan(basePackages = {"com.ring.web","com.ring.core","com.ring.service"})
 @SpringBootApplication(exclude = {DataSourceAutoConfiguration.class})
 public class LaunchApplication {
 

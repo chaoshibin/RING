@@ -4,28 +4,25 @@ import org.springframework.amqp.core.Binding;
 import org.springframework.amqp.core.BindingBuilder;
 import org.springframework.amqp.core.DirectExchange;
 import org.springframework.amqp.core.Queue;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 
 
 /**
  * @author chaoshibin
  */
-//@Configuration
+@ConfigurationProperties(prefix = "rabbitmq.default")
 public class RabbitConfig {
-    @Value("${rabbitmq.jrquser.queue}")
-    private String message;
 
-    @Value("${rabbitmq.jrquser.routing}")
+    private String queue;
+
     private String routing;
 
-    @Value("${rabbitmq.jrquser.exchange.direct}")
     private String exchange;
 
     @Bean
     public Queue queueMessage() {
-        return new Queue(this.message);
+        return new Queue(this.queue);
     }
 
     @Bean
@@ -43,5 +40,17 @@ public class RabbitConfig {
     @Bean
     public Binding bindingExchangeMessage(Queue queueMessage, DirectExchange exchange) {
         return BindingBuilder.bind(queueMessage).to(exchange).with(routing);
+    }
+
+    public void setQueue(String queue) {
+        this.queue = queue;
+    }
+
+    public void setRouting(String routing) {
+        this.routing = routing;
+    }
+
+    public void setExchange(String exchange) {
+        this.exchange = exchange;
     }
 }

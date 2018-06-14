@@ -1,31 +1,11 @@
-framework:
-    swagger-open: true #开启接口
-    http:
-       socketTimeout: 30000
-       connectTimeout: 30000
-       connectionRequestTimeout: 200
-       maxTotal: 1000
-    executor:
-       corePoolSize: 10
-       maxPoolSize: 100
-       queueCapacity: 10000
-       keepAliveSeconds: 60
 spring:
     datasource:
         type: com.alibaba.druid.pool.DruidDataSource
         driverClassName: com.mysql.jdbc.Driver
-        url : jdbc:mysql://localhost:3306/ring?useUnicode=true&amp;characterEncoding=UTF-8
-        username : root
-        password : root
         druid:
-            update:  #数据源1
-                url: jdbc:mysql://localhost:3306/ring?allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8
-                username: root
-                password: root
-            select-one:  #数据源2
-                url: jdbc:mysql://localhost:3306/ring?allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8
-                username: root
-                password: root
+            url: jdbc:mysql://localhost:3306/ring?allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8
+            username: root
+            password:
             initial-size: 30
             max-active: 100
             min-idle: 30
@@ -86,4 +66,9 @@ spring:
        prefix: classpath:/templates/
        suffix: .html
        check-template-location: true
+    mail:
+       host: smtp.exmail.qq.com
+       username: 123456@qq.com
+       password: 123456
+       default-encoding: UTF-8
 

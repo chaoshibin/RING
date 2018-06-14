@@ -1,3 +1,15 @@
+framework:
+    swagger-open: true #开启接口
+    http:
+       socketTimeout: 30000
+       connectTimeout: 30000
+       connectionRequestTimeout: 200
+       maxTotal: 1000
+    executor:
+       corePoolSize: 5
+       maxPoolSize: 5
+       queueCapacity: 5
+       keepAliveSeconds: 5
 spring:
     # 环境 dev|test|pro
     profiles:
@@ -17,11 +29,6 @@ spring:
             force: true
     #resources: # 指定静态资源的路径
         #static-locations: classpath:/static/,classpath:/views/
-    mail:
-       host: smtp.exmail.qq.com
-       username: ****@qq.com
-       password: ***
-       default-encoding: UTF-8
 # Tomcat
 server:
     tomcat:

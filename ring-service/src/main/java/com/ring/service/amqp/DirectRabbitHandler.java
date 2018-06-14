@@ -1,4 +1,4 @@
-package com.ring.common.amqp;
+package com.ring.service.amqp;
 
 import cn.hutool.log.StaticLog;
 import com.rabbitmq.client.Channel;

@@ -61,4 +61,20 @@ public class TaskExecutorConfig {
         executor.initialize();
         return executor;
     }
+
+    public void setCorePoolSize(int corePoolSize) {
+        this.corePoolSize = corePoolSize;
+    }
+
+    public void setMaxPoolSize(int maxPoolSize) {
+        this.maxPoolSize = maxPoolSize;
+    }
+
+    public void setQueueCapacity(int queueCapacity) {
+        this.queueCapacity = queueCapacity;
+    }
+
+    public void setKeepAliveSeconds(int keepAliveSeconds) {
+        this.keepAliveSeconds = keepAliveSeconds;
+    }
 }

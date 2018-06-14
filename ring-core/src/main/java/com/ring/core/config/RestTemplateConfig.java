@@ -91,4 +91,24 @@ public class RestTemplateConfig {
                 //.setRetryHandler(new DefaultHttpRequestRetryHandler(2, true))
                 .build();
     }
+
+    public void setSocketTimeout(int socketTimeout) {
+        this.socketTimeout = socketTimeout;
+    }
+
+    public void setConnectTimeout(int connectTimeout) {
+        this.connectTimeout = connectTimeout;
+    }
+
+    public void setConnectionRequestTimeout(int connectionRequestTimeout) {
+        this.connectionRequestTimeout = connectionRequestTimeout;
+    }
+
+    public void setMaxTotal(int maxTotal) {
+        this.maxTotal = maxTotal;
+    }
+
+    public void setDefaultMaxPerRoute(int defaultMaxPerRoute) {
+        this.defaultMaxPerRoute = defaultMaxPerRoute;
+    }
 }
