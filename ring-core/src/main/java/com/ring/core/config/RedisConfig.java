@@ -7,11 +7,7 @@ import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.core.*;
 
 /**
- * Redis配置
- *
- * @author chenshun
- * @email sunlightcs@gmail.com
- * @date 2017-07-70 19:22
+ * @author chaoshibin
  */
 @Configuration
 public class RedisConfig {

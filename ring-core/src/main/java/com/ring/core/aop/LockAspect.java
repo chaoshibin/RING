@@ -10,6 +10,8 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.reflect.MethodSignature;
 
 import java.lang.reflect.Method;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * 功能描述:
@@ -26,6 +28,8 @@ public class LockAspect {
 
     public static final int MILLIS = 1000;
 
+    private final static Map<String, String> DUPLICATE_KEY_MAP = new ConcurrentHashMap<>();
+
     @Around("@annotation(com.ring.core.annotion.Lockable)")
     public Object distributeLock(ProceedingJoinPoint pjp) {
 
@@ -39,6 +43,19 @@ public class LockAspect {
 
         if (StringUtils.isBlank(key)) {
             throw new RuntimeException("不合法的Lock key");
+        }
+
+        if (expireSeconds < 1) {
+            throw new RuntimeException("不合法的expireSeconds");
+        }
+        String methodName = targetMethod.getName();
+        if (DUPLICATE_KEY_MAP.containsKey(methodName)) {
+            if (!DUPLICATE_KEY_MAP.get(methodName).equals(key)) {
+                log.error("使用了重复的Lock key : {}", key);
+                throw new RuntimeException("duplicate lock key:" + key);
+            }
+        } else {
+            DUPLICATE_KEY_MAP.put(methodName, key);
         }
 
         if (!RedisUtil.tryGetDistributedLock(key, expireSeconds * MILLIS)) {
