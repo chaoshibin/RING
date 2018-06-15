@@ -48,6 +48,7 @@
         <kaptcha.version>0.0.9</kaptcha.version>
         <commons.io.version>2.5</commons.io.version>
         <lombok.version>1.16.20</lombok.version>
+        <curator-recipes.version>4.0.1</curator-recipes.version>
     </properties>
     <dependencyManagement>
         <dependencies>
@@ -183,6 +184,11 @@
                 <groupId>org.projectlombok</groupId>
                 <artifactId>lombok</artifactId>
                 <version>${lombok.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.curator</groupId>
+                <artifactId>curator-recipes</artifactId>
+                <version>${curator-recipes.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

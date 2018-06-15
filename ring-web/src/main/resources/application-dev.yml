@@ -1,3 +1,9 @@
+framework:
+    zookeeper:
+        connectionString: localhost:2181
+        namespace: ring/lock
+        sessionTimeoutMs: 60000
+        connectionTimeoutMs: 15000
 spring:
     datasource:
         type: com.alibaba.druid.pool.DruidDataSource
@@ -58,14 +64,6 @@ spring:
          simple:
             concurrency: 1
             max-concurrency: 1
-    thymeleaf:
-       cache: false #开发时关闭缓存
-       mode: HTML5
-       encoding: UTF-8
-       content-type: text/html
-       prefix: classpath:/templates/
-       suffix: .html
-       check-template-location: true
     mail:
        host: smtp.exmail.qq.com
        username: 123456@qq.com

@@ -6,10 +6,10 @@ framework:
        connectionRequestTimeout: 200
        maxTotal: 1000
     executor:
-       corePoolSize: 5
-       maxPoolSize: 5
-       queueCapacity: 5
-       keepAliveSeconds: 5
+       corePoolSize: 10
+       maxPoolSize: 100
+       queueCapacity: 10000
+       keepAliveSeconds: 60
 spring:
     # 环境 dev|test|pro
     profiles:
@@ -29,6 +29,14 @@ spring:
             force: true
     #resources: # 指定静态资源的路径
         #static-locations: classpath:/static/,classpath:/views/
+    thymeleaf:
+       cache: false #开发时关闭缓存
+       mode: HTML5
+       encoding: UTF-8
+       content-type: text/html
+       prefix: classpath:/templates/
+       suffix: .html
+       check-template-location: true
 # Tomcat
 server:
     tomcat:

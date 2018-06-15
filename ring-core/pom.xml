@@ -113,5 +113,13 @@
             <groupId>com.github.axet</groupId>
             <artifactId>kaptcha</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.101tec</groupId>
+            <artifactId>zkclient</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.curator</groupId>
+            <artifactId>curator-recipes</artifactId>
+        </dependency>
     </dependencies>
 </project>

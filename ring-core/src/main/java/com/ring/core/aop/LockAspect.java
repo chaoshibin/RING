@@ -24,6 +24,8 @@ import java.lang.reflect.Method;
 @Slf4j
 public class LockAspect {
 
+    public static final int MILLIS = 1000;
+
     @Around("@annotation(com.ring.core.annotion.Lockable)")
     public Object distributeLock(ProceedingJoinPoint pjp) {
 
@@ -39,11 +41,10 @@ public class LockAspect {
             throw new RuntimeException("不合法的Lock key");
         }
 
-        if (!RedisUtil.tryGetDistributedLock(key, expireSeconds * 1000)) {
-            log.warn("获取分布式锁失败，任务被否决");
+        if (!RedisUtil.tryGetDistributedLock(key, expireSeconds * MILLIS)) {
+            log.warn("获取分布式锁失败，任务退出");
             return resultObject;
         }
-
         try {
             resultObject = pjp.proceed();
         } catch (Throwable throwable) {
