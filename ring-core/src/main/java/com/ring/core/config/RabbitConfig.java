@@ -14,11 +14,11 @@ import org.springframework.context.annotation.Bean;
 @ConfigurationProperties(prefix = "rabbitmq.default")
 public class RabbitConfig {
 
-    private String queue;
+    private String queue = "default.queue";
 
-    private String routing;
+    private String routing = "default.routing";
 
-    private String exchange;
+    private String exchange = "default.exchange";
 
     @Bean
     public Queue queueMessage() {
