@@ -3,6 +3,7 @@ package com.ring.web.controller;
 import com.google.code.kaptcha.Constants;
 import com.google.code.kaptcha.Producer;
 import com.ring.api.model.sys.SysUser;
+import com.ring.core.annotion.Lockable;
 import com.ring.core.util.ShiroUtil;
 import org.apache.commons.io.IOUtils;
 import org.apache.shiro.SecurityUtils;
@@ -33,6 +34,7 @@ public class SysLoginController extends AbstractController {
     private Producer producer;
 
     @GetMapping(value = "/login")
+    @Lockable
     public String login() {
         return "login";
     }
@@ -41,6 +43,7 @@ public class SysLoginController extends AbstractController {
      * 验证码
      */
     @RequestMapping("captcha.jpg")
+    @Lockable
     public void captcha(HttpServletResponse response) throws ServletException, IOException {
         response.setHeader("Cache-Control", "no-store, no-cache");
         response.setContentType("image/jpeg");
@@ -125,6 +128,7 @@ public class SysLoginController extends AbstractController {
      * 退出
      */
     @RequestMapping(value = "/logout", method = RequestMethod.POST)
+    @Lockable
     public String logout() {
         SecurityUtils.getSubject().logout();
         return "redirect:login";

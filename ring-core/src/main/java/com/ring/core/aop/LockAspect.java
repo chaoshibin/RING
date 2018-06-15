@@ -8,6 +8,7 @@ import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.reflect.MethodSignature;
+import org.springframework.context.annotation.Configuration;
 
 import java.lang.reflect.Method;
 import java.util.Map;
@@ -24,6 +25,7 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 @Aspect
 @Slf4j
+@Configuration
 public class LockAspect {
 
     public static final int MILLIS = 1000;
@@ -33,42 +35,42 @@ public class LockAspect {
     @Around("@annotation(com.ring.core.annotion.Lockable)")
     public Object distributeLock(ProceedingJoinPoint pjp) {
 
-        Object resultObject = null;
+        Object result = null;
         MethodSignature methodSignature = (MethodSignature) pjp.getSignature();
-        Method targetMethod = methodSignature.getMethod();
+        Method method = methodSignature.getMethod();
 
-        Lockable lockable = targetMethod.getAnnotation(Lockable.class);
-        String key = lockable.key();
-        long expireSeconds = lockable.expireSeconds();
+        Lockable lockable = method.getAnnotation(Lockable.class);
+        checkLockable(lockable);
 
-        if (StringUtils.isBlank(key)) {
-            throw new RuntimeException("不合法的Lock key");
-        }
-
-        if (expireSeconds < 1) {
-            throw new RuntimeException("不合法的expireSeconds");
-        }
-        String methodName = targetMethod.getName();
-        if (DUPLICATE_KEY_MAP.containsKey(methodName)) {
-            if (!DUPLICATE_KEY_MAP.get(methodName).equals(key)) {
-                log.error("使用了重复的Lock key : {}", key);
-                throw new RuntimeException("duplicate lock key:" + key);
-            }
-        } else {
-            DUPLICATE_KEY_MAP.put(methodName, key);
-        }
-
-        if (!RedisUtil.tryGetDistributedLock(key, expireSeconds * MILLIS)) {
+        String lockKey = StringUtils.defaultIfBlank(lockable.key(), methodSignature.toLongString());
+        checkDuplicateKey(lockKey, methodSignature.toLongString());
+        if (!RedisUtil.tryGetDistributedLock(lockKey, lockable.expireSeconds() * MILLIS)) {
             log.warn("获取分布式锁失败，任务退出");
-            return resultObject;
+            return result;
         }
         try {
-            resultObject = pjp.proceed();
+            result = pjp.proceed();
         } catch (Throwable throwable) {
             log.error("分布式锁切面异常", throwable);
+            throw new RuntimeException("分布式锁切面异常");
         }
-
-        return resultObject;
+        return result;
     }
 
+    private void checkLockable(Lockable lockable) {
+        if (lockable.expireSeconds() < 1) {
+            throw new RuntimeException("不合法的expireSeconds");
+        }
+    }
+
+    private void checkDuplicateKey(String lockKey, String method) {
+        if (DUPLICATE_KEY_MAP.containsKey(lockKey)) {
+            if (!DUPLICATE_KEY_MAP.get(lockKey).equals(method)) {
+                log.error("使用了重复的Lock key : {}", lockKey);
+                throw new RuntimeException("duplicate lock key:" + lockKey);
+            }
+        } else {
+            DUPLICATE_KEY_MAP.put(lockKey, method);
+        }
+    }
 }
