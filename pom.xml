@@ -49,6 +49,7 @@
         <commons.io.version>2.5</commons.io.version>
         <lombok.version>1.16.20</lombok.version>
         <curator-recipes.version>4.0.1</curator-recipes.version>
+        <quartz.version>2.2.1</quartz.version>
     </properties>
     <dependencyManagement>
         <dependencies>
@@ -189,6 +190,11 @@
                 <groupId>org.apache.curator</groupId>
                 <artifactId>curator-recipes</artifactId>
                 <version>${curator-recipes.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.quartz-scheduler</groupId>
+                <artifactId>quartz</artifactId>
+                <version>${quartz.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
