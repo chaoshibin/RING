@@ -17,11 +17,12 @@ import org.springframework.stereotype.Component;
  */
 @Slf4j
 @Component
-public abstract class CommonJobListener implements JobListener {
+public class CommonJobListener implements JobListener {
     private static final String JOB_LISTENER_NAME = CommonJobListener.class.getSimpleName();
+
     @Override
     public String getName() {
-        return null;
+        return JOB_LISTENER_NAME;
     }
 
     @Override

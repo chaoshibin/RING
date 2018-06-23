@@ -17,7 +17,7 @@ import org.springframework.stereotype.Component;
  */
 @Component
 @Slf4j
-public abstract class CommonTriggerListener implements TriggerListener {
+public class CommonTriggerListener implements TriggerListener {
     private static final String TRIGGER_LISTENER_NAME = CommonTriggerListener.class.getSimpleName();
 
     @Override

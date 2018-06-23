@@ -1,9 +1,11 @@
 package com.ring.core.config.quartz.template;
 
+import com.ring.common.util.JsonUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
+import org.quartz.JobKey;
 
 /**
  * 功能描述:
@@ -42,7 +44,8 @@ public abstract class JobTemplate implements Job {
             this.run();
             this.complete();
         } else {
-            log.info("不满足前置条件，任务被过滤");
+            JobKey jobKey = jobExecutionContext.getJobDetail().getKey();
+            log.info("不满足前置条件，任务被过滤->{}", JsonUtil.toJSON(jobKey));
         }
     }
 }
