@@ -1,8 +1,7 @@
 package com.ring.core.config.quartz;
 
-import com.ring.core.mybatis.MyBatisAutoConfiguration;
 import org.quartz.Scheduler;
-import org.springframework.boot.autoconfigure.AutoConfigureAfter;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.scheduling.quartz.SchedulerFactoryBean;
 
@@ -16,17 +15,14 @@ import org.springframework.scheduling.quartz.SchedulerFactoryBean;
  * @since 1.0.0
  */
 //@Configuration
-@AutoConfigureAfter(MyBatisAutoConfiguration.class)
+//@AutoConfigureAfter(MyBatisAutoConfiguration.class)
 public class QuartzConfig {
-
-    @Bean
-    public SchedulerFactoryBean schedulerFactoryBean(){
-        SchedulerFactoryBean schedulerFactoryBean = new SchedulerFactoryBean();
-        return schedulerFactoryBean;
-    }
-
-    @Bean
-    public Scheduler scheduler(SchedulerFactoryBean schedulerFactoryBean){
-        return schedulerFactoryBean.getScheduler();
+    @Autowired
+    private SpringJobFactroy springJobFactroy;
+    @Bean("scheduler")
+    public Scheduler scheduler(SchedulerFactoryBean schedulerFactoryBean) {
+        SchedulerFactoryBean factoryBean = new SchedulerFactoryBean();
+        factoryBean.setJobFactory(springJobFactroy);
+        return factoryBean.getScheduler();
     }
 }

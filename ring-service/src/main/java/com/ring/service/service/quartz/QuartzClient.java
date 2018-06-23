@@ -1,12 +1,10 @@
 package com.ring.service.service.quartz;
 
-import cn.hutool.core.util.ClassLoaderUtil;
-import cn.hutool.core.util.StrUtil;
 import com.ring.common.exception.BusinessException;
+import com.ring.common.util.ClassUtil;
+import com.ring.core.util.SchedulerUtil;
 import lombok.extern.slf4j.Slf4j;
-import org.quartz.Scheduler;
-import org.quartz.SchedulerException;
-import org.quartz.TriggerKey;
+import org.quartz.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -26,33 +24,7 @@ public class QuartzClient {
     private Scheduler scheduler;
 
 
-    /**
-     * 验证Job是否存在
-     */
-    public boolean jobExists(String jobName, String jobGroup) throws SchedulerException {
-        TriggerKey triggerKey = TriggerKey.triggerKey(jobName, jobGroup);
-        return scheduler.checkExists(triggerKey);
-    }
 
-    public void addJob() {
-        try {
-            if (scheduler.isShutdown()) {
-                log.info("调度器关闭了，任务添加失败");
-                throw new BusinessException("调度器关闭了，任务添加失败");
-            }
-        } catch (SchedulerException e) {
-            log.error("任务调度器异常", e);
-            throw new BusinessException("任务调度器异常");
-        }
-        String msg = StrUtil.EMPTY;
 
-        try {
-            if (jobExists("", "")) {
-                throw new BusinessException("任务已存在，添加失败");
-            }
-            Class<?> clazz = Class.forName("");
-            Class<?> aClass = ClassLoaderUtil.loadClass("");
-        } catch (Exception e) {
-        }
-    }
+
 }
