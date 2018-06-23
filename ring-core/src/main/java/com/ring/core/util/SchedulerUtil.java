@@ -6,9 +6,6 @@ import com.ring.core.config.quartz.SchedulerJob;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.MapUtils;
 import org.quartz.*;
-import org.quartz.impl.matchers.GroupMatcher;
-
-import java.util.Set;
 
 /**
  * 功能描述:
@@ -26,8 +23,7 @@ public final class SchedulerUtil {
 
     public void createJob(SchedulerJob job) {
         if (SchedulerUtil.schedulerShutDown()) {
-            log.info("调度器未启用，任务添加失败");
-            throw new BusinessException("调度器未启用，任务添加失败");
+            SchedulerUtil.start();
         }
         if (SchedulerUtil.jobExists(job.getJobName(), job.getJobGroup())) {
             throw new BusinessException("任务已存在，添加失败");
@@ -150,6 +146,24 @@ public final class SchedulerUtil {
         }
     }
 
+    public static void start() {
+        try {
+            SCHEDULER.start();
+        } catch (SchedulerException e) {
+            log.error("启动任务调度器异常", e);
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static void shutdown() {
+        try {
+            SCHEDULER.shutdown();
+        } catch (SchedulerException e) {
+            log.error("关闭任务调度器异常", e);
+            throw new RuntimeException(e);
+        }
+    }
+
     public static void resumeJob(String name, String group) {
         JobKey key = new JobKey(name, group);
         try {
@@ -160,30 +174,23 @@ public final class SchedulerUtil {
         }
     }
 
-    public static void deleteAllJob() throws SchedulerException {
-        if (!SCHEDULER.isShutdown()) {
-            GroupMatcher<JobKey> matcher = GroupMatcher.anyJobGroup();
-            Set<JobKey> jobKeys = SCHEDULER.getJobKeys(matcher);
-            for (JobKey key : jobKeys) {
-                SCHEDULER.interrupt(key);
-                SCHEDULER.pauseJob(key);
-                SCHEDULER.deleteJob(key);
-            }
-            SCHEDULER.clear();
+    public static void deleteAllJob() {
+        if (!schedulerShutDown()) {
+            shutdown();
         }
     }
 
     public void deleteJob(String jobName, String groupName) {
-        try {
-            if (!schedulerShutDown()) {
-                JobKey key = JobKey.jobKey(jobName, groupName);
-                SCHEDULER.interrupt(key);
-                SCHEDULER.pauseJob(key);
-                SCHEDULER.deleteJob(key);
-                SCHEDULER.clear();
+        if (!schedulerShutDown()) {
+            TriggerKey triggerKey = TriggerKey.triggerKey(jobName, groupName);
+            try {
+                SCHEDULER.pauseTrigger(triggerKey);
+                SCHEDULER.unscheduleJob(triggerKey);
+                SCHEDULER.deleteJob(JobKey.jobKey(jobName, groupName));
+            } catch (SchedulerException e) {
+                log.error("delete job failure", e);
+                throw new RuntimeException(e);
             }
-        } catch (SchedulerException e) {
-            e.printStackTrace();
         }
     }
 }
