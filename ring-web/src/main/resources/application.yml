@@ -50,7 +50,7 @@ logging:
     config : classpath:logback-spring.xml
 #Mybatis
 mybatis:
-    type-aliase-package: com.ring.api.model
+    type-aliases-package: com.ring.api.model
     mapper-locations : classpath*:mapper/*.xml
     config-location : classpath:mybatis-config.xml
     base-package : com.ring.core.mapper

@@ -11,7 +11,6 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
-import org.springframework.boot.bind.RelaxedPropertyResolver;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.EnvironmentAware;
 import org.springframework.context.annotation.Bean;
@@ -39,10 +38,8 @@ public class MyBatisAutoConfiguration {
 	@AutoConfigureAfter(DataSourceAutoConfiguration.class)
 	@EnableConfigurationProperties(MyBatisProperties.class)
 	protected static class SqlSessionFactoryConfiguration {
-
 		@Autowired
 		private MyBatisProperties myBatisProperties;
-
 		@Autowired
 		private DataSource dataSource;
 
@@ -58,7 +55,7 @@ public class MyBatisAutoConfiguration {
 				return factory.getObject();
 			} catch (Exception e) {
 				LOG.error("Could not confiure mybatis session factory", e);
-				return null;
+				throw new RuntimeException("SqlSessionFactory创建失败");
 			}
 		}
 
@@ -74,17 +71,17 @@ public class MyBatisAutoConfiguration {
 	@AutoConfigureAfter(SqlSessionFactoryConfiguration.class)
 	protected static class MapperScannerConfigurerConfiguration implements EnvironmentAware {
 
-		private RelaxedPropertyResolver properties;
+		private Environment environment;
 
 		@Override
 		public void setEnvironment(Environment environment) {
-			this.properties = new RelaxedPropertyResolver(environment, "mybatis.");
+			this.environment = environment;
 		}
 
 		@Bean
 		public MapperScannerConfigurer mapperScannerConfigurer() {
 			MapperScannerConfigurer config = new MapperScannerConfigurer();
-			config.setBasePackage(properties.getProperty("base-package"));
+			config.setBasePackage(environment.getProperty("mybatis.base-package"));
 			config.setSqlSessionFactoryBeanName(SQL_SESSION_FACTORY);
 			return config;
 		}

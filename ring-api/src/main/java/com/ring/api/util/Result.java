@@ -1,7 +1,5 @@
 package com.ring.api.util;
 
-import cn.hutool.http.HttpStatus;
-
 import java.io.Serializable;
 
 /**
@@ -10,6 +8,7 @@ import java.io.Serializable;
 public class Result<T> implements Serializable {
     private static final long serialVersionUID = 1L;
     private static final Integer SUCCESS = 200;
+    private static final Integer ERROR = 500;
     /**
      * 状态码
      */
@@ -24,11 +23,11 @@ public class Result<T> implements Serializable {
     private T value;
 
     public static Result info(String msg) {
-        return new Result(HttpStatus.HTTP_BAD_METHOD, msg);
+        return new Result(SUCCESS, msg);
     }
 
     public static Result error(String msg) {
-        return new Result(HttpStatus.HTTP_INTERNAL_ERROR, msg);
+        return new Result(ERROR, msg);
     }
 
     public static <T> Result create(T value) {

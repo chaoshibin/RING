@@ -2,6 +2,9 @@ package com.ring.core.mybatis;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
+/**
+ * @author chaoshibin
+ */
 @ConfigurationProperties(prefix = "mybatis")
 public class MyBatisProperties {
 
