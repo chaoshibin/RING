@@ -20,10 +20,8 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Lockable {
 
-    @AliasFor("value")
     String key() default "";
 
-    @AliasFor("key")
     String value() default "";
 
     long expireSeconds() default 120;

@@ -40,10 +40,12 @@ public class LockAspect {
         Method method = methodSignature.getMethod();
 
         Lockable lockable = method.getAnnotation(Lockable.class);
-        checkLockable(lockable);
-
-        String lockKey = StringUtils.defaultIfBlank(lockable.key(), methodSignature.toLongString());
-        checkDuplicateKey(lockKey, methodSignature.toLongString());
+        this.checkLockable(lockable);
+        String lockKey = lockable.key();
+        if (StringUtils.isBlank(lockKey)){
+            lockKey = methodSignature.toLongString().split(" ")[2].replace(".", "/");
+        }
+        this.checkDuplicateKey(lockKey, methodSignature.toLongString());
         if (!RedisUtil.tryGetDistributedLock(lockKey, lockable.expireSeconds() * MILLIS)) {
             log.warn("获取分布式锁失败，任务退出");
             return result;
