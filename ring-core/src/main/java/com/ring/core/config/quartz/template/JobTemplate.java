@@ -37,7 +37,7 @@ public abstract class JobTemplate implements Job {
     }
 
     @Override
-    public void execute(JobExecutionContext jobExecutionContext) throws JobExecutionException {
+    public final void execute(JobExecutionContext jobExecutionContext) throws JobExecutionException {
 
         if (this.conditional()) {
             this.before();

@@ -9,6 +9,7 @@ public class Result<T> implements Serializable {
     private static final long serialVersionUID = 1L;
     private static final Integer SUCCESS = 200;
     private static final Integer ERROR = 500;
+
     /**
      * 状态码
      */
@@ -22,8 +23,12 @@ public class Result<T> implements Serializable {
      */
     private T value;
 
-    public static Result info(String msg) {
-        return new Result(SUCCESS, msg);
+    public static Result getErrorInstance() {
+        return Result.error("服务内部错误");
+    }
+
+    public static <T> Result info(T value) {
+        return new Result(value);
     }
 
     public static Result error(String msg) {
