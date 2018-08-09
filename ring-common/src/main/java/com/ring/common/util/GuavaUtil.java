@@ -1,6 +1,7 @@
 package com.ring.common.util;
 
 import com.google.common.base.Joiner;
+import com.google.common.collect.Maps;
 
 import java.util.Map;
 
@@ -20,4 +21,7 @@ public final class GuavaUtil {
         return JOINER.join(map);
     }
 
+    public static String getHttpRequest(String url, Map<?, ?> map) {
+        return url + "?" + getHttpParam(map);
+    }
 }
