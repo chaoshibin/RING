@@ -32,17 +32,44 @@ public final class DateUtil extends DateUtils {
      * @return
      */
     public static String formatDefault(Date date) {
-        if (date == null) {
-            throw new IllegalArgumentException();
-        }
-        return FastDateFormat.getInstance(YYYY_MM_DD_HH_MM_SS).format(date);
+        return format(date, YYYY_MM_DD_HH_MM_SS);
+    }
+
+    /**
+     * 解析日期默认格式 yyyy-MM-dd HH:mm:ss
+     *
+     * @param dateStr Date
+     * @return
+     */
+    public static Date parseDefault(String dateStr) {
+        return parse(dateStr, YYYY_MM_DD_HH_MM_SS);
+    }
+
+    /**
+     * 格式 yyyy-MM-dd
+     *
+     * @param date
+     * @return
+     */
+    public static String formatYMD(Date date) {
+        return format(date, YYYY_MM_DD);
+    }
+
+    /**
+     * 格式 yyyy-MM-dd
+     *
+     * @param dateStr
+     * @return
+     */
+    public static Date parseYMD(String dateStr) {
+        return parse(dateStr, YYYY_MM_DD);
     }
 
     /**
      * 格式化日期
      *
      * @param date    Date
-     * @param pattern 日期格式 e.g. yyyy-MM-dd HH:mm:ss
+     * @param pattern 日期格式
      * @return 日期字符串
      */
     public static String format(Date date, String pattern) {
@@ -53,27 +80,10 @@ public final class DateUtil extends DateUtils {
     }
 
     /**
-     * 解析日期默认格式 yyyy-MM-dd HH:mm:ss
-     *
-     * @param dateStr Date
-     * @return
-     */
-    public static Date parseDefault(String dateStr) {
-        Date date;
-        try {
-            date = FastDateFormat.getInstance(YYYY_MM_DD_HH_MM_SS).parse(dateStr);
-        } catch (ParseException e) {
-            LOG.error("parse Date failure", e);
-            throw new RuntimeException(e);
-        }
-        return date;
-    }
-
-    /**
      * 解析日期
      *
      * @param dateStr Date
-     * @param pattern 日期格式 e.g. yyyy-MM-dd HH:mm:ss
+     * @param pattern 日期格式
      * @return
      */
     public static Date parse(String dateStr, String pattern) {
