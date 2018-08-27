@@ -66,6 +66,26 @@ public final class DateUtil extends DateUtils {
     }
 
     /**
+     * 格式 yyyyMMdd
+     *
+     * @param date
+     * @return
+     */
+    public static String formatYMDWithoutSeparate(Date date) {
+        return format(date, YYYYMMDD);
+    }
+
+    /**
+     * 格式 yyyyMMdd
+     *
+     * @param dateStr
+     * @return
+     */
+    public static Date parseYMDWithoutSeparate(String dateStr) {
+        return parse(dateStr, YYYYMMDD);
+    }
+
+    /**
      * 格式化日期
      *
      * @param date    Date
