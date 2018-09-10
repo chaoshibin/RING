@@ -11,18 +11,21 @@ package com.ring.api.constant;
  */
 public enum ResultEnum {
 
-    OK(200, "success"),
-    LACK_PARAM(50005, "参数不合法");
+    OK("OK", "成功"),
+    ERROR("ERROR", "失败"),
+    RETRY("RETRY", "重试"),
+    LACK_PARAM("50005", "参数不合法"),
+    INTERNAL_SERVER_ERROR("500", "服务内部错误");
 
-    private int code;
+    private String code;
     private String msg;
 
-    ResultEnum(int code, String msg) {
+    ResultEnum(String code, String msg) {
         this.code = code;
         this.msg = msg;
     }
 
-    public int getCode() {
+    public String getCode() {
         return code;
     }
 

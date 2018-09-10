@@ -42,6 +42,6 @@ public class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public Result handle(Exception e) {
         LOG.error(e, "未知异常");
-        return Result.create(HttpStatus.INTERNAL_SERVER_ERROR.value(), "服务内部错误");
+        return Result.create(String.valueOf(HttpStatus.INTERNAL_SERVER_ERROR.value()), "服务内部错误");
     }
 }

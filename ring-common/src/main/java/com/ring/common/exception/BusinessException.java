@@ -14,13 +14,13 @@ import com.ring.api.constant.ResultEnum;
 public final class BusinessException extends RuntimeException {
     private static final long serialVersionUID = 1L;
 
-    private Integer code;
+    private String code;
 
     public BusinessException(String message) {
         super(message);
     }
 
-    public BusinessException(Integer code, String message) {
+    public BusinessException(String code, String message) {
         super(message);
         this.code = code;
     }
@@ -31,7 +31,7 @@ public final class BusinessException extends RuntimeException {
         this.code = result.getCode();
     }
 
-    public Integer getCode() {
+    public String getCode() {
         return code;
     }
 }

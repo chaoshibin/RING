@@ -14,9 +14,9 @@ import com.ring.api.constant.ResultEnum;
 public final class RpcException extends RuntimeException {
     private static final long serialVersionUID = 1L;
 
-    private Integer code;
+    private String code;
 
-    public RpcException(Integer code, String message) {
+    public RpcException(String code, String message) {
         super(message);
         this.code = code;
     }
@@ -26,7 +26,7 @@ public final class RpcException extends RuntimeException {
         this.code = result.getCode();
     }
 
-    public Integer getCode() {
+    public String getCode() {
         return code;
     }
 }
