@@ -14,6 +14,7 @@ public enum ResultEnum {
     OK("OK", "成功"),
     ERROR("ERROR", "失败"),
     RETRY("RETRY", "重试"),
+    ILLEGAL_REQUEST("2000", "非法请求"),
     LACK_PARAM("50005", "参数不合法"),
     INTERNAL_SERVER_ERROR("500", "服务内部错误");
 
