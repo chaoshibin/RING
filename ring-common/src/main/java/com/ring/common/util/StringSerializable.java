@@ -1,7 +1,6 @@
 package com.ring.common.util;
 
 import com.google.common.base.MoreObjects;
-import com.google.common.base.Objects;
 import org.apache.commons.lang3.SerializationUtils;
 
 import java.io.Serializable;
@@ -28,5 +27,8 @@ public abstract class StringSerializable implements Serializable {
         return MoreObjects.toStringHelper(this).toString();
     }
 
+    public static void main(String[] args) {
+
+    }
 
 }
