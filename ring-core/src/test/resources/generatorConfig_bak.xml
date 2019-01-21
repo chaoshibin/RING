@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+    <!-- 配置mysql 驱动jar包路径.用了绝对路径 -->
+    <classPathEntry location="D:/maven/repository/mysql/mysql-connector-java/5.1.30/mysql-connector-java-5.1.30.jar"/>
+
+    <context id="DB2Tables" targetRuntime="MyBatis3">
+        <!-- 识别关键字 -->
+        <property name="autoDelimitKeywords" value="true"/>
+        <property name="beginningDelimiter" value="`"/>
+        <property name="endingDelimiter" value="`"/>
+        <property name="selectAllOrderByClause" value="create_time desc"/>
+        <!--<plugin type="org.mybatis.generator.plugins.SerializablePlugin" />-->
+
+        <!--<plugin type="org.mybatis.generator.plugins.EqualsHashCodePlugin"/>-->
+        <!--<plugin type="org.mybatis.generator.plugins.ToStringPlugin"/>-->
+
+        <!-- mybatis generator 重写插件 -->
+        <plugin type="org.mybatis.generator.plugins.CustomSerializablePlugin">
+            <property name="suppressJavaInterface" value="false"/>
+            <!--开启Swagger注解 true或false-->
+            <property name="swagger" value="true"/>
+            <!--开启lombok注解 true或false-->
+            <property name="lombok" value="false"/>
+        </plugin>
+
+        <!-- mybatis generator 重写插件 -->
+        <plugin type="org.mybatis.generator.plugins.CustomCreateBeanPlugin">
+            <!--service接口包名-->
+            <property name="targetPackage" value="com.ring.core.service"/>
+            <!--service实现类包名-->
+            <property name="implementationPackage" value="com.ring.core.service.impl"/>
+            <!--mapper接口包名-->
+            <property name="mapperInterfacePack" value="com.ring.core.mapper"/>
+
+            <property name="targetProject" value="E:\Workspace\RING\ring-core\src\main\java"/>
+        </plugin>
+        <!-- mybatis generator 重写插件 -->
+        <commentGenerator type="org.mybatis.generator.plugins.CustomCommentGeneratorPlugin">
+            <property name="suppressAllComments" value="false"/>
+            <property name="suppressDate" value="true"/>
+        </commentGenerator>
+
+        <!-- 注释控制完毕 -->
+        <!--数据库连接信息 -->
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver"
+                        connectionURL="jdbc:mysql://127.0.0.1:3306/ring?characterEncoding=utf-8"
+                        userId="root"
+                        password="">
+        </jdbcConnection>
+
+        <javaTypeResolver>
+            <property name="forceBigDecimals" value="false"/>
+        </javaTypeResolver>
+
+        <!-- 数据表对应的model 层  -->
+        <javaModelGenerator targetPackage="com.ring.api.model.sys"
+                            targetProject="F:\JavaProjects\RING\ring-api\src\main\java">
+            <property name="enableSubPackages" value="true"/>
+            <property name="trimStrings" value="true"/>
+        </javaModelGenerator>
+
+        <!-- sql mapper 配置文件 -->
+        <sqlMapGenerator targetPackage="mapper.sys"
+                         targetProject="F:\JavaProjects\RING\ring-core\src\main\resources">
+            <property name="enableSubPackages" value="true"/>
+        </sqlMapGenerator>
+
+        <!-- mapper接口 -->
+        <javaClientGenerator targetPackage="com.ring.core.mapper.sys" type="XMLMAPPER"
+                             targetProject="F:\JavaProjects\RING\ring-core\src\main\java">
+            <property name="enableSubPackages" value="true"/>
+        </javaClientGenerator>
+
+        <!-- 要对哪些数据表进行生成操作，必须要有一个 -->
+
+        <table tableName="sys_user" domainObjectName="SysUser"
+               enableCountByExample="true" enableUpdateByExample="true"
+               enableDeleteByExample="true" enableSelectByExample="true"
+               selectByExampleQueryId="true">
+        </table>
+        <table tableName="sys_log" domainObjectName="SysLog"
+               enableCountByExample="true" enableUpdateByExample="true"
+               enableDeleteByExample="true" enableSelectByExample="true"
+               selectByExampleQueryId="true">
+        </table>
+        <table tableName="sys_menu" domainObjectName="SysMenu"
+               enableCountByExample="true" enableUpdateByExample="true"
+               enableDeleteByExample="true" enableSelectByExample="true"
+               selectByExampleQueryId="true">
+        </table>
+        <table tableName="sys_role" domainObjectName="SysRole"
+               enableCountByExample="true" enableUpdateByExample="true"
+               enableDeleteByExample="true" enableSelectByExample="true"
+               selectByExampleQueryId="true">
+        </table>
+        <table tableName="sys_role_menu" domainObjectName="SysRoleMenu"
+               enableCountByExample="true" enableUpdateByExample="true"
+               enableDeleteByExample="true" enableSelectByExample="true"
+               selectByExampleQueryId="true">
+        </table>
+        <table tableName="sys_user_role" domainObjectName="SysUserRole"
+               enableCountByExample="true" enableUpdateByExample="true"
+               enableDeleteByExample="true" enableSelectByExample="true"
+               selectByExampleQueryId="true">
+        </table>
+    </context>
+</generatorConfiguration>

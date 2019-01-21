@@ -50,6 +50,7 @@
         <googleauth.version>0.5.0</googleauth.version>
         <aalto-xml.version>0.9.11</aalto-xml.version>
         <poi-ooxml.version>3.12</poi-ooxml.version>
+        <redisson.version>3.10.0</redisson.version>
     </properties>
     <dependencyManagement>
         <dependencies>
@@ -195,6 +196,11 @@
                 <groupId>org.quartz-scheduler</groupId>
                 <artifactId>quartz</artifactId>
                 <version>${quartz.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.redisson</groupId>
+                <artifactId>redisson</artifactId>
+                <version>${redisson.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

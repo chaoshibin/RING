@@ -21,7 +21,7 @@
     <!--<contextName>userapi</contextName>-->
     <!--<property name="LOG_PATH" value="logs"/>-->
     <!--配置属性，通过 ${name} 方式调用-->
-    <property name="LOG_PATH" value="E:/ring/logs"/>
+    <property name="LOG_PATH" value="F:/ring/logs"/>
 
     <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
         <!--encoder 默认配置为PatternLayoutEncoder-->

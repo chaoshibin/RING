@@ -3,6 +3,7 @@ package com.ring.web.controller;
 import com.google.code.kaptcha.Constants;
 import com.google.code.kaptcha.Producer;
 import com.ring.api.model.sys.SysUser;
+import com.ring.core.annotion.Lock;
 import com.ring.core.annotion.Lockable;
 import com.ring.core.util.ShiroUtil;
 import org.apache.commons.io.IOUtils;
@@ -34,8 +35,8 @@ public class SysLoginController extends AbstractController {
     private Producer producer;
 
     @GetMapping(value = "/login")
-    @Lockable
-    public String login() {
+    @Lock(prefix = "key", unique = "#sysUser.id")
+    public  synchronized String login(String a, SysUser sysUser) {
         return "login";
     }
 

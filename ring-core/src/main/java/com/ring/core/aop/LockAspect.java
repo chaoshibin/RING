@@ -1,5 +1,7 @@
 package com.ring.core.aop;
 
+import com.ring.common.exception.LockException;
+import com.ring.core.annotion.Lock;
 import com.ring.core.annotion.Lockable;
 import com.ring.core.util.RedisUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -8,7 +10,16 @@ import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.reflect.MethodSignature;
+import org.redisson.Redisson;
+import org.redisson.api.RLock;
+import org.redisson.api.RedissonClient;
+import org.redisson.config.Config;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.expression.EvaluationContext;
+import org.springframework.expression.ExpressionParser;
+import org.springframework.expression.spel.standard.SpelExpressionParser;
+import org.springframework.expression.spel.support.StandardEvaluationContext;
 
 import java.lang.reflect.Method;
 import java.util.Map;
@@ -29,10 +40,11 @@ import java.util.concurrent.ConcurrentHashMap;
 public class LockAspect {
 
     public static final int MILLIS = 1000;
-
     private final static Map<String, String> DUPLICATE_KEY_MAP = new ConcurrentHashMap<>();
+    @Autowired
+    private RedissonClient redissonClient;
 
-    @Around("@annotation(com.ring.core.annotion.Lockable)")
+    //@Around("@annotation(com.ring.core.annotion.Lockable)")
     public Object distributeLock(ProceedingJoinPoint pjp) {
 
         Object result = null;
@@ -42,7 +54,7 @@ public class LockAspect {
         Lockable lockable = method.getAnnotation(Lockable.class);
         this.checkLockable(lockable);
         String lockKey = lockable.key();
-        if (StringUtils.isBlank(lockKey)){
+        if (StringUtils.isBlank(lockKey)) {
             lockKey = methodSignature.toLongString().split(" ")[2].replace(".", "/");
         }
         this.checkDuplicateKey(lockKey, methodSignature.toLongString());
@@ -57,6 +69,52 @@ public class LockAspect {
             throw new RuntimeException("分布式锁切面异常");
         }
         return result;
+    }
+
+    @Around("@annotation(com.ring.core.annotion.Lock)")
+    public Object tryLock(ProceedingJoinPoint pjp) throws Throwable {
+
+        Object result = null;
+        MethodSignature methodSignature = (MethodSignature) pjp.getSignature();
+        Method method = methodSignature.getMethod();
+        Lock lockAnnotation = method.getAnnotation(Lock.class);
+        String uniqueKey = getUniqueKey(lockAnnotation.unique(), methodSignature, pjp.getArgs());
+        String keyPrefix = lockAnnotation.prefix();
+
+        String lockKey = keyPrefix + ":" + uniqueKey;
+        RLock lock = redissonClient.getLock(lockKey);
+        if (!lock.tryLock()) {
+            log.error("获取分布式锁失败，任务退出, key = {}", lockKey);
+            throw new LockException("获取分布式锁失败，key=" + lockKey);
+        }
+        try {
+            result = pjp.proceed();
+        } catch (Throwable e) {
+            throw e;
+        } finally {
+            lock.unlock();
+        }
+        return result;
+    }
+
+
+    /**
+     * 获取缓存的key
+     * key 定义在注解上，支持SPEL表达式
+     *
+     * @return
+     */
+    private String getUniqueKey(String uniqueKey, MethodSignature method, Object[] args) {
+        String[] paraNameArr = method.getParameterNames();
+        //使用SPEL进行key的解析
+        ExpressionParser parser = new SpelExpressionParser();
+        //创建SPEL上下文
+        EvaluationContext evaluationContext = new StandardEvaluationContext();
+        //把方法参数放入SPEL上下文中
+        for (int i = 0; i < paraNameArr.length; i++) {
+            evaluationContext.setVariable(paraNameArr[i], args[i]);
+        }
+        return parser.parseExpression(uniqueKey).getValue(evaluationContext, String.class);
     }
 
     private void checkLockable(Lockable lockable) {

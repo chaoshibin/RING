@@ -5,7 +5,7 @@
 
 <generatorConfiguration>
     <!-- 配置mysql 驱动jar包路径.用了绝对路径 -->
-    <classPathEntry location="D:/maven/repository/mysql/mysql-connector-java/5.1.34/mysql-connector-java-5.1.34.jar"/>
+    <classPathEntry location="D:/maven/repository/mysql/mysql-connector-java/5.1.44/mysql-connector-java-5.1.44.jar"/>
 
     <context id="DB2Tables" targetRuntime="MyBatis3">
         <!-- 识别关键字 -->
@@ -16,13 +16,13 @@
         <!--<plugin type="org.mybatis.generator.plugins.SerializablePlugin" />-->
 
         <!--<plugin type="org.mybatis.generator.plugins.EqualsHashCodePlugin"/>-->
-        <!--<plugin type="org.mybatis.generator.plugins.ToStringPlugin"/>-->
+        <!-- <plugin type="org.mybatis.generator.plugins.ToStringPlugin"/>-->
 
         <!-- mybatis generator 重写插件 -->
         <plugin type="org.mybatis.generator.plugins.CustomSerializablePlugin">
             <property name="suppressJavaInterface" value="false"/>
             <!--开启Swagger注解 true或false-->
-            <property name="swagger" value="true"/>
+            <property name="swagger" value="false"/>
             <!--开启lombok注解 true或false-->
             <property name="lombok" value="false"/>
         </plugin>
@@ -30,13 +30,13 @@
         <!-- mybatis generator 重写插件 -->
         <plugin type="org.mybatis.generator.plugins.CustomCreateBeanPlugin">
             <!--service接口包名-->
-            <property name="targetPackage" value="com.ring.core.service"/>
+            <property name="targetPackage" value="com.hehenian.jcptdk.service.report"/>
             <!--service实现类包名-->
-            <property name="implementationPackage" value="com.ring.core.service.impl"/>
+            <property name="implementationPackage" value="com.hehenian.jcptdk.service.report.impl"/>
             <!--mapper接口包名-->
-            <property name="mapperInterfacePack" value="com.ring.core.mapper"/>
+            <property name="mapperInterfacePack" value="com.hehenian.jcptdk.dao.report"/>
 
-            <property name="targetProject" value="E:\Workspace\RING\ring-core\src\main\java"/>
+            <property name="targetProject" value="F:\JavaProjects\hehenian-jcpt\jcpt-dk\jcpt-dk-default\src\main\java"/>
         </plugin>
         <!-- mybatis generator 重写插件 -->
         <commentGenerator type="org.mybatis.generator.plugins.CustomCommentGeneratorPlugin">
@@ -47,9 +47,9 @@
         <!-- 注释控制完毕 -->
         <!--数据库连接信息 -->
         <jdbcConnection driverClass="com.mysql.jdbc.Driver"
-                        connectionURL="jdbc:mysql://127.0.0.1:3306/ring?characterEncoding=utf-8"
-                        userId="root"
-                        password="root">
+                        connectionURL="jdbc:mysql://10.50.10.201:3306/dkd_sp2p?characterEncoding=utf-8"
+                        userId="xiezb_dev"
+                        password="ab683312">
         </jdbcConnection>
 
         <javaTypeResolver>
@@ -57,55 +57,236 @@
         </javaTypeResolver>
 
         <!-- 数据表对应的model 层  -->
-        <javaModelGenerator targetPackage="com.ring.api.model"
-                            targetProject="E:\Workspace\RING\ring-api\src\main\java">
+        <javaModelGenerator targetPackage="com.hehenian.jcptdk.model.report"
+                            targetProject="F:\JavaProjects\hehenian-jcpt\jcpt-dk\jcpt-dk-api\src\main\java">
             <property name="enableSubPackages" value="true"/>
             <property name="trimStrings" value="true"/>
         </javaModelGenerator>
 
         <!-- sql mapper 配置文件 -->
-        <sqlMapGenerator targetPackage="mapper"
-                         targetProject="E:\Workspace\RING\ring-core\src\main\resources">
+        <sqlMapGenerator targetPackage="mapping.report"
+                         targetProject="F:\JavaProjects\hehenian-jcpt\jcpt-dk\jcpt-dk-default\src\main\resources">
             <property name="enableSubPackages" value="true"/>
         </sqlMapGenerator>
 
         <!-- mapper接口 -->
-        <javaClientGenerator targetPackage="com.ring.core.mapper" type="XMLMAPPER"
-                             targetProject="E:\Workspace\RING\ring-core\src\main\java">
+        <javaClientGenerator targetPackage="com.hehenian.jcptdk.dao.report" type="XMLMAPPER"
+                             targetProject="F:\JavaProjects\hehenian-jcpt\jcpt-dk\jcpt-dk-default\src\main\java">
             <property name="enableSubPackages" value="true"/>
         </javaClientGenerator>
 
         <!-- 要对哪些数据表进行生成操作，必须要有一个 -->
 
-        <table tableName="sys_user" domainObjectName="SysUser"
+        <table schema="dkd_sp2p" tableName="l_repay_auto_setting" domainObjectName="RepayAutoSetting"
                enableCountByExample="true" enableUpdateByExample="true"
                enableDeleteByExample="true" enableSelectByExample="true"
                selectByExampleQueryId="true">
         </table>
-        <table tableName="sys_log" domainObjectName="SysLog"
-               enableCountByExample="true" enableUpdateByExample="true"
-               enableDeleteByExample="true" enableSelectByExample="true"
-               selectByExampleQueryId="true">
-        </table>
-        <table tableName="sys_menu" domainObjectName="SysMenu"
-               enableCountByExample="true" enableUpdateByExample="true"
-               enableDeleteByExample="true" enableSelectByExample="true"
-               selectByExampleQueryId="true">
-        </table>
-        <table tableName="sys_role" domainObjectName="SysRole"
-               enableCountByExample="true" enableUpdateByExample="true"
-               enableDeleteByExample="true" enableSelectByExample="true"
-               selectByExampleQueryId="true">
-        </table>
-        <table tableName="sys_role_menu" domainObjectName="SysRoleMenu"
-               enableCountByExample="true" enableUpdateByExample="true"
-               enableDeleteByExample="true" enableSelectByExample="true"
-               selectByExampleQueryId="true">
-        </table>
-        <table tableName="sys_user_role" domainObjectName="SysUserRole"
-               enableCountByExample="true" enableUpdateByExample="true"
-               enableDeleteByExample="true" enableSelectByExample="true"
-               selectByExampleQueryId="true">
-        </table>
+        <!--        <table schema="jrquser" tableName="t_customer_work_info" domainObjectName="CustomerWorkInfo"
+                       enableCountByExample="true" enableUpdateByExample="true"
+                       enableDeleteByExample="true" enableSelectByExample="true"
+                       selectByExampleQueryId="true">
+                </table>-->
+        <!--
+               <table schema="jrquser" tableName="t_customer_product" domainObjectName="CustomerProduct"
+                       enableCountByExample="true" enableUpdateByExample="true"
+                       enableDeleteByExample="true" enableSelectByExample="true"
+                       selectByExampleQueryId="true">
+                </table>
+              <table schema="jrquser" tableName="t_customer_contact" domainObjectName="CustomerContact"
+                       enableCountByExample="true" enableUpdateByExample="true"
+                       enableDeleteByExample="true" enableSelectByExample="true"
+                       selectByExampleQueryId="true">
+                </table>-->
+        <!--        <table schema="jrquser" tableName="t_customer_contact_phone" domainObjectName="CustomerContactPhone"
+                       enableCountByExample="true" enableUpdateByExample="true"
+                       enableDeleteByExample="true" enableSelectByExample="true"
+                       selectByExampleQueryId="true">
+                </table>-->
+        <!--        <table schema="jrquser" tableName="t_sys_monitor" domainObjectName="SysMonitor"
+                       enableCountByExample="true" enableUpdateByExample="true"
+                       enableDeleteByExample="true" enableSelectByExample="true"
+                       selectByExampleQueryId="true">
+                </table>
+                <table schema="jrquser" tableName="t_sys_threshold" domainObjectName="SysThreshold"
+                       enableCountByExample="true" enableUpdateByExample="true"
+                       enableDeleteByExample="true" enableSelectByExample="true"
+                       selectByExampleQueryId="true">
+                </table>-->
+        <!--        <table schema="jrquser" tableName="t_customer_call_log" domainObjectName="CustomerCallLog"
+                       enableCountByExample="true" enableUpdateByExample="true"
+                       enableDeleteByExample="true" enableSelectByExample="true"
+                       selectByExampleQueryId="true">
+                </table>
+                <table schema="jrquser" tableName="t_customer_phone_list" domainObjectName="CustomerPhoneList"
+                       enableCountByExample="true" enableUpdateByExample="true"
+                       enableDeleteByExample="true" enableSelectByExample="true"
+                       selectByExampleQueryId="true">
+                </table>
+                <table schema="jrquser" tableName="t_contract_serial" domainObjectName="ContractSerial"
+                       enableCountByExample="true" enableUpdateByExample="true"
+                       enableDeleteByExample="true" enableSelectByExample="true"
+                       selectByExampleQueryId="true">
+                </table>
+                <table schema="jrquser" tableName="t_customer_action" domainObjectName="CustomerAction"
+                       enableCountByExample="true" enableUpdateByExample="true"
+                       enableDeleteByExample="true" enableSelectByExample="true"
+                       selectByExampleQueryId="true">
+                </table>-->
+        <!--       <table schema="jrquser" tableName="t_customer_call_log" domainObjectName="CustomerCallLog"
+                      enableCountByExample="true" enableUpdateByExample="true"
+                      enableDeleteByExample="true" enableSelectByExample="true"
+                      selectByExampleQueryId="true">
+               </table>
+               <table schema="jrquser" tableName="t_customer_phone_list" domainObjectName="CustomerPhoneList"
+                      enableCountByExample="true" enableUpdateByExample="true"
+                      enableDeleteByExample="true" enableSelectByExample="true"
+                      selectByExampleQueryId="true">
+               </table>
+               <table schema="jrquser" tableName="t_customer_additional_info" domainObjectName="CustomerAdditionalInfo"
+                      enableCountByExample="true" enableUpdateByExample="true"
+                      enableDeleteByExample="true" enableSelectByExample="true"
+                      selectByExampleQueryId="true">
+               </table>
+               <table schema="jrquser" tableName="t_customer_action" domainObjectName="CustomerAction"
+                      enableCountByExample="true" enableUpdateByExample="true"
+                      enableDeleteByExample="true" enableSelectByExample="true"
+                      selectByExampleQueryId="true">
+               </table>
+               <table schema="jrquser" tableName="t_customer_info" domainObjectName="CustomerInfo"
+                      enableCountByExample="true" enableUpdateByExample="true"
+                      enableDeleteByExample="true" enableSelectByExample="true"
+                      selectByExampleQueryId="true">
+               </table>
+               <table schema="jrquser" tableName="t_customer_address_info" domainObjectName="CustomerAddressInfo"
+                      enableCountByExample="true" enableUpdateByExample="true"
+                      enableDeleteByExample="true" enableSelectByExample="true"
+                      selectByExampleQueryId="true">
+               </table>
+               <table schema="jrquser" tableName="t_customer_bank_info" domainObjectName="CustomerBankInfo"
+                      enableCountByExample="true" enableUpdateByExample="true"
+                      enableDeleteByExample="true" enableSelectByExample="true"
+                      selectByExampleQueryId="true">
+               </table>
+               <table schema="jrquser" tableName="t_customer_car_info" domainObjectName="CustomerCarInfo"
+                      enableCountByExample="true" enableUpdateByExample="true"
+                      enableDeleteByExample="true" enableSelectByExample="true"
+                      selectByExampleQueryId="true">
+               </table>
+               <table schema="jrquser" tableName="t_customer_college_info" domainObjectName="CustomerCollegeInfo"
+                      enableCountByExample="true" enableUpdateByExample="true"
+                      enableDeleteByExample="true" enableSelectByExample="true"
+                      selectByExampleQueryId="true">
+               </table>
+               <table schema="jrquser" tableName="t_customer_contact_info" domainObjectName="CustomerContactInfo"
+                      enableCountByExample="true" enableUpdateByExample="true"
+                      enableDeleteByExample="true" enableSelectByExample="true"
+                      selectByExampleQueryId="true">
+               </table>
+               <table schema="jrquser" tableName="t_customer_house_info" domainObjectName="CustomerHouseInfo"
+                      enableCountByExample="true" enableUpdateByExample="true"
+                      enableDeleteByExample="true" enableSelectByExample="true"
+                      selectByExampleQueryId="true">
+               </table>
+               <table schema="jrquser" tableName="t_customer_loan_info" domainObjectName="CustomerLoanInfo"
+                      enableCountByExample="true" enableUpdateByExample="true"
+                      enableDeleteByExample="true" enableSelectByExample="true"
+                      selectByExampleQueryId="true">
+               </table>
+               <table schema="jrquser" tableName="t_customer_work_info" domainObjectName="CustomerWorkInfo"
+                      enableCountByExample="true" enableUpdateByExample="true"
+                      enableDeleteByExample="true" enableSelectByExample="true"
+                      selectByExampleQueryId="true">
+               </table>-->
+        <!--        <table schema="jrquser" tableName="t_customer_info" domainObjectName="CustomerInfo"
+                       enableCountByExample="true" enableUpdateByExample="true"
+                       enableDeleteByExample="true" enableSelectByExample="true"
+                       selectByExampleQueryId="true">
+                </table>
+                <table schema="jrquser" tableName="t_customer_address_info" domainObjectName="CustomerAddressInfo"
+                       enableCountByExample="true" enableUpdateByExample="true"
+                       enableDeleteByExample="true" enableSelectByExample="true"
+                       selectByExampleQueryId="true">
+                </table>
+                <table schema="jrquser" tableName="t_customer_bank_info" domainObjectName="CustomerBankInfo"
+                       enableCountByExample="true" enableUpdateByExample="true"
+                       enableDeleteByExample="true" enableSelectByExample="true"
+                       selectByExampleQueryId="true">
+                </table>
+                <table schema="jrquser" tableName="t_customer_car_info" domainObjectName="CustomerCarInfo"
+                       enableCountByExample="true" enableUpdateByExample="true"
+                       enableDeleteByExample="true" enableSelectByExample="true"
+                       selectByExampleQueryId="true">
+                </table>
+                <table schema="jrquser" tableName="t_customer_college_info" domainObjectName="CustomerCollegeInfo"
+                       enableCountByExample="true" enableUpdateByExample="true"
+                       enableDeleteByExample="true" enableSelectByExample="true"
+                       selectByExampleQueryId="true">
+                </table>
+                <table schema="jrquser" tableName="t_customer_contact_info" domainObjectName="CustomerContactInfo"
+                       enableCountByExample="true" enableUpdateByExample="true"
+                       enableDeleteByExample="true" enableSelectByExample="true"
+                       selectByExampleQueryId="true">
+                </table>
+                <table schema="jrquser" tableName="t_customer_house_info" domainObjectName="CustomerHouseInfo"
+                       enableCountByExample="true" enableUpdateByExample="true"
+                       enableDeleteByExample="true" enableSelectByExample="true"
+                       selectByExampleQueryId="true">
+                </table>
+                <table schema="jrquser" tableName="t_customer_loan_info" domainObjectName="CustomerLoanInfo"
+                       enableCountByExample="true" enableUpdateByExample="true"
+                       enableDeleteByExample="true" enableSelectByExample="true"
+                       selectByExampleQueryId="true">
+                </table>
+                <table schema="jrquser" tableName="t_customer_work_info" domainObjectName="CustomerWorkInfo"
+                       enableCountByExample="true" enableUpdateByExample="true"
+                       enableDeleteByExample="true" enableSelectByExample="true"
+                       selectByExampleQueryId="true">
+                </table>-->
+        <!--        <table schema="jrquser" tableName="customer_info_bak" domainObjectName="CustomerInfoBak"
+                       enableCountByExample="true" enableUpdateByExample="true"
+                       enableDeleteByExample="true" enableSelectByExample="true"
+                       selectByExampleQueryId="true">
+                </table>
+                <table schema="jrquser" tableName="customer_address_info_bak" domainObjectName="CustomerAddressInfoBak"
+                       enableCountByExample="true" enableUpdateByExample="true"
+                       enableDeleteByExample="true" enableSelectByExample="true"
+                       selectByExampleQueryId="true">
+                </table>
+                <table schema="jrquser" tableName="customer_bank_info_bak" domainObjectName="CustomerBankInfoBak"
+                       enableCountByExample="true" enableUpdateByExample="true"
+                       enableDeleteByExample="true" enableSelectByExample="true"
+                       selectByExampleQueryId="true">
+                </table>
+                <table schema="jrquser" tableName="customer_car_info_bak" domainObjectName="CustomerCarInfoBak"
+                       enableCountByExample="true" enableUpdateByExample="true"
+                       enableDeleteByExample="true" enableSelectByExample="true"
+                       selectByExampleQueryId="true">
+                </table>
+                <table schema="jrquser" tableName="customer_college_info_bak" domainObjectName="CustomerCollegeInfoBak"
+                       enableCountByExample="true" enableUpdateByExample="true"
+                       enableDeleteByExample="true" enableSelectByExample="true"
+                       selectByExampleQueryId="true">
+                </table>
+                <table schema="jrquser" tableName="customer_contact_info_bak" domainObjectName="CustomerContactInfoBak"
+                       enableCountByExample="true" enableUpdateByExample="true"
+                       enableDeleteByExample="true" enableSelectByExample="true"
+                       selectByExampleQueryId="true">
+                </table>
+                <table schema="jrquser" tableName="customer_house_info_bak" domainObjectName="CustomerHouseInfoBak"
+                       enableCountByExample="true" enableUpdateByExample="true"
+                       enableDeleteByExample="true" enableSelectByExample="true"
+                       selectByExampleQueryId="true">
+                </table>
+                <table schema="jrquser" tableName="customer_loan_info_bak" domainObjectName="CustomerLoanInfoBak"
+                       enableCountByExample="true" enableUpdateByExample="true"
+                       enableDeleteByExample="true" enableSelectByExample="true"
+                       selectByExampleQueryId="true">
+                </table>
+                <table schema="jrquser" tableName="customer_work_info_bak" domainObjectName="CustomerWorkInfoBak"
+                       enableCountByExample="true" enableUpdateByExample="true"
+                       enableDeleteByExample="true" enableSelectByExample="true"
+                       selectByExampleQueryId="true">
+                </table>-->
     </context>
 </generatorConfiguration>

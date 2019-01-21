@@ -12,9 +12,9 @@ spring:
             url: jdbc:mysql://localhost:3306/ring?allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8
             username: root
             password:
-            initial-size: 30
-            max-active: 100
-            min-idle: 30
+            initial-size: 10
+            max-active: 20
+            min-idle: 5
             max-wait: 60000 # 配置获取连接等待超时的时间
             pool-prepared-statements: true
             max-pool-prepared-statement-per-connection-size: 20
@@ -42,8 +42,8 @@ spring:
     redis:
         open: false  # 是否开启redis缓存  true开启   false关闭
         database: 0
-        host: 10.1.2.104
-        port: 6104
+        host: 10.50.10.203
+        port: 6379
         password:       # 密码（默认为空）
         timeout: 6000  # 连接超时时长（毫秒）
         pool:

@@ -14,4 +14,7 @@
     from sys_user
     where username = #{username,jdbcType=VARCHAR}
   </select>
+  <update id="updateDeptIdIncr">
+      update sys_user set dept_id = dept_id + 1 where user_id = 1
+    </update>
 </mapper>

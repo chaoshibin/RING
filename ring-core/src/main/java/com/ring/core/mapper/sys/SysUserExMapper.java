@@ -14,4 +14,6 @@ public interface SysUserExMapper extends SysUserMapper {
      * @return
      */
     SysUser getByUsername(String username);
+
+    int updateDeptIdIncr();
 }
