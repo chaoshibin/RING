@@ -1,8 +1,8 @@
 package com.ring.core.aop;
 
 import com.ring.common.exception.LockException;
-import com.ring.core.annotion.Lock;
 import com.ring.core.annotion.Lockable;
+import com.ring.core.annotion.Lockable2;
 import com.ring.core.util.RedisUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -10,10 +10,8 @@ import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.reflect.MethodSignature;
-import org.redisson.Redisson;
 import org.redisson.api.RLock;
 import org.redisson.api.RedissonClient;
-import org.redisson.config.Config;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.expression.EvaluationContext;
@@ -51,7 +49,7 @@ public class LockAspect {
         MethodSignature methodSignature = (MethodSignature) pjp.getSignature();
         Method method = methodSignature.getMethod();
 
-        Lockable lockable = method.getAnnotation(Lockable.class);
+        Lockable2 lockable = method.getAnnotation(Lockable2.class);
         this.checkLockable(lockable);
         String lockKey = lockable.key();
         if (StringUtils.isBlank(lockKey)) {
@@ -71,21 +69,22 @@ public class LockAspect {
         return result;
     }
 
-    @Around("@annotation(com.ring.core.annotion.Lock)")
+    @Around("@annotation(com.ring.core.annotion.Lockable)")
     public Object tryLock(ProceedingJoinPoint pjp) throws Throwable {
 
         Object result = null;
         MethodSignature methodSignature = (MethodSignature) pjp.getSignature();
         Method method = methodSignature.getMethod();
-        Lock lockAnnotation = method.getAnnotation(Lock.class);
-        String uniqueKey = getUniqueKey(lockAnnotation.unique(), methodSignature, pjp.getArgs());
-        String keyPrefix = lockAnnotation.prefix();
+        Lockable lockAnnotation = method.getAnnotation(Lockable.class);
 
-        String lockKey = keyPrefix + ":" + uniqueKey;
+        String lockKey = lockAnnotation.prefix();
+        if (StringUtils.startsWith(lockAnnotation.unique(),"#")){
+            lockKey += ":" + getUniqueKey(lockAnnotation.unique(), methodSignature, pjp.getArgs());
+        }
         RLock lock = redissonClient.getLock(lockKey);
         if (!lock.tryLock()) {
-            log.error("获取分布式锁失败，任务退出, key = {}", lockKey);
-            throw new LockException("获取分布式锁失败，key=" + lockKey);
+            log.error("获取分布式锁失败, key = {}", lockKey);
+            throw new LockException("获取分布式锁失败，key = " + lockKey);
         }
         try {
             result = pjp.proceed();
@@ -117,7 +116,7 @@ public class LockAspect {
         return parser.parseExpression(uniqueKey).getValue(evaluationContext, String.class);
     }
 
-    private void checkLockable(Lockable lockable) {
+    private void checkLockable(Lockable2 lockable) {
         if (lockable.expireSeconds() < 1) {
             throw new RuntimeException("不合法的expireSeconds");
         }

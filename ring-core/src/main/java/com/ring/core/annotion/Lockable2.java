@@ -1,5 +1,7 @@
 package com.ring.core.annotion;
 
+import org.springframework.core.annotation.AliasFor;
+
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -16,9 +18,11 @@ import java.lang.annotation.Target;
  */
 @Target({ElementType.METHOD})
 @Retention(RetentionPolicy.RUNTIME)
-public @interface Lock {
+public @interface Lockable2 {
 
-    String prefix();
+    String key() default "";
 
-    String unique() default "";
+    String value() default "";
+
+    long expireSeconds() default 120;
 }
