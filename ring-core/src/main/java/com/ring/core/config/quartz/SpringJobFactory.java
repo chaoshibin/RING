@@ -1,6 +1,6 @@
 package com.ring.core.config.quartz;
 
-import com.ring.core.util.SpringContextHolder;
+import com.ring.core.util.SpringBeanFactory;
 import org.quartz.spi.TriggerFiredBundle;
 import org.springframework.scheduling.quartz.AdaptableJobFactory;
 import org.springframework.stereotype.Component;
@@ -15,9 +15,9 @@ import org.springframework.stereotype.Component;
  * @since 1.0.0
  */
 @Component
-public class SpringJobFactroy extends AdaptableJobFactory {
+public class SpringJobFactory extends AdaptableJobFactory {
     @Override
     protected Object createJobInstance(TriggerFiredBundle bundle) throws Exception {
-        return SpringContextHolder.getBean(bundle.getJobDetail().getJobClass());
+        return SpringBeanFactory.get(bundle.getJobDetail().getJobClass());
     }
 }

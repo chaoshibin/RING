@@ -9,23 +9,25 @@ import java.util.concurrent.ConcurrentHashMap;
  * Date:     2019/1/25 9:51
  * Description:
  */
-public class SingletonFactory {
+public final class SingletonFactory {
 
-    private final static ConcurrentHashMap<Class<?>, Object> BEAN_POOL = new ConcurrentHashMap<>();
+    private static ConcurrentHashMap<Class<?>, Object> beanFactory = new ConcurrentHashMap<>();
 
     private SingletonFactory() {
 
     }
 
-    public static <T> T build(Class<T> clazz) {
-        T instance = (T) BEAN_POOL.get(clazz);
+    @SuppressWarnings("unchecked")
+    public static <T> T get(Class<T> clazz) {
+
+        T instance = (T) beanFactory.get(clazz);
         if (instance == null) {
             synchronized (SingletonFactory.class) {
-                instance = (T) BEAN_POOL.get(clazz);
+                instance = (T) beanFactory.get(clazz);
                 if (instance == null) {
                     try {
                         instance = clazz.newInstance();
-                        BEAN_POOL.put(clazz, instance);
+                        beanFactory.put(clazz, instance);
                     } catch (Exception e) {
                         throw new RuntimeException(e);
                     }

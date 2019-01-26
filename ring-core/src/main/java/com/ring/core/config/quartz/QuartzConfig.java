@@ -32,7 +32,7 @@ public class QuartzConfig {
     }
 
     @Bean
-    public SchedulerFactoryBean schedulerFactoryBean(SpringJobFactroy springJobFactroy,
+    public SchedulerFactoryBean schedulerFactoryBean(SpringJobFactory springJobFactroy,
                                                      @Qualifier("quartzProperties")Properties properties) {
         SchedulerFactoryBean factoryBean = new SchedulerFactoryBean();
         factoryBean.setJobFactory(springJobFactroy);

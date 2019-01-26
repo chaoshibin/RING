@@ -4,7 +4,6 @@ import com.google.code.kaptcha.Constants;
 import com.google.code.kaptcha.Producer;
 import com.ring.api.model.sys.SysUser;
 import com.ring.core.annotion.Lockable;
-import com.ring.core.annotion.Lockable2;
 import com.ring.core.util.ShiroUtil;
 import org.apache.commons.io.IOUtils;
 import org.apache.shiro.SecurityUtils;
@@ -12,7 +11,10 @@ import org.apache.shiro.authc.*;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.imageio.ImageIO;
@@ -36,7 +38,7 @@ public class SysLoginController extends AbstractController {
 
     @GetMapping(value = "/login")
     @Lockable(prefix = "key", unique = "#sysUser.id")
-    public   String login(String a, SysUser sysUser) {
+    public String login(String a, SysUser sysUser) {
         return "login";
     }
 
@@ -44,7 +46,6 @@ public class SysLoginController extends AbstractController {
      * 验证码
      */
     @RequestMapping("captcha.jpg")
-    @Lockable2
     public void captcha(HttpServletResponse response) throws ServletException, IOException {
         response.setHeader("Cache-Control", "no-store, no-cache");
         response.setContentType("image/jpeg");
@@ -129,7 +130,6 @@ public class SysLoginController extends AbstractController {
      * 退出
      */
     @RequestMapping(value = "/logout", method = RequestMethod.POST)
-    @Lockable2
     public String logout() {
         SecurityUtils.getSubject().logout();
         return "redirect:login";

@@ -26,7 +26,7 @@ import java.util.concurrent.TimeUnit;
  */
 public final class RedisUtil {
 
-    private final static StringRedisTemplate redisTemplate = SpringContextHolder.getBean(StringRedisTemplate.class);
+    private final static StringRedisTemplate redisTemplate = SpringBeanFactory.get(StringRedisTemplate.class);
     private ValueOperations<String, String> valueOperations = redisTemplate.opsForValue();
     private static final long DEFAULT_EXPIRED = 2 * 60 * 1000L;
 

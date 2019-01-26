@@ -13,7 +13,7 @@ import org.apache.zookeeper.CreateMode;
  * @since 1.0.0
  */
 public final class ZkUtil {
-    private final static CuratorFramework ZK_CLIENT = SpringContextHolder.getBean(CuratorFramework.class);
+    private final static CuratorFramework ZK_CLIENT = SpringBeanFactory.get(CuratorFramework.class);
 
     public boolean sharedLock(String path) {
         ZK_CLIENT.create()

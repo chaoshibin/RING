@@ -10,7 +10,7 @@ import java.util.Map;
  * @author chaoshibin
  */
 @Configuration
-public class SpringContextHolder implements ApplicationContextAware {
+public class SpringBeanFactory implements ApplicationContextAware {
     private static ApplicationContext applicationContext;
 
     @Override
@@ -22,11 +22,11 @@ public class SpringContextHolder implements ApplicationContextAware {
         return applicationContext;
     }
 
-    public static <T> T getBean(Class<T> clazz) {
+    public static <T> T get(Class<T> clazz) {
         return applicationContext.getBean(clazz);
     }
 
-    public static <T> T getBean(String name, Class<T> clazz) {
+    public static <T> T get(String name, Class<T> clazz) {
         return applicationContext.getBean(name, clazz);
     }
 

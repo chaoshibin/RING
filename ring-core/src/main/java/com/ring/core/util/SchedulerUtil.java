@@ -19,7 +19,7 @@ import org.quartz.*;
 @Slf4j
 public final class SchedulerUtil {
 
-    private final static Scheduler SCHEDULER = SpringContextHolder.getBean(Scheduler.class);
+    private final static Scheduler SCHEDULER = SpringBeanFactory.get(Scheduler.class);
 
     public void createJob(SchedulerJob job) {
         if (SchedulerUtil.schedulerShutDown()) {

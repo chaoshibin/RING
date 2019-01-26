@@ -1,6 +1,6 @@
 package com.ring.core.lock;
 
-import com.ring.core.util.SpringContextHolder;
+import com.ring.core.util.SpringBeanFactory;
 import org.redisson.api.RedissonClient;
 
 /**
@@ -12,7 +12,7 @@ import org.redisson.api.RedissonClient;
  */
 public class RedisLock implements Lock {
 
-    private RedissonClient client = SpringContextHolder.getBean(RedissonClient.class);
+    private RedissonClient client = SpringBeanFactory.get(RedissonClient.class);
 
     @Override
     public boolean lock(String key) {
