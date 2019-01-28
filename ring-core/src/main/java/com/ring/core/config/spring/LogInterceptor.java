@@ -2,6 +2,7 @@ package com.ring.core.config.spring;
 
 import com.ring.common.util.CodecUtil;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.MDC;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -27,7 +28,7 @@ public class LogInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o) throws Exception {
         String requestId = CodecUtil.createUUID();
         log.info("requestId:{}, clientIp:{}, X-Forwarded-For:{}", requestId, httpServletRequest.getRemoteAddr(),
-                httpServletRequest.getHeader("X-Forwarded-For"));
+                StringUtils.defaultString(httpServletRequest.getHeader("X-Forwarded-For")));
         MDC.put(REQUEST_ID, requestId);
         MDC.put(SERVER_IP, InetAddress.getLocalHost().getHostAddress());
         return true;
