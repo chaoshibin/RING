@@ -2,7 +2,6 @@ package com.ring.core.config.spring;
 
 import com.ring.common.util.CodecUtil;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.collections4.MapUtils;
 import org.slf4j.MDC;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -26,13 +25,11 @@ public class LogInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o) throws Exception {
-        if (MapUtils.isNotEmpty(httpServletRequest.getParameterMap())) {
-            String requestId = CodecUtil.createUUID();
-            log.info("requestId:{}, clientIp:{}, X-Forwarded-For:{}", requestId, httpServletRequest.getRemoteAddr(),
-                    httpServletRequest.getHeader("X-Forwarded-For"));
-            MDC.put(REQUEST_ID, requestId);
-            MDC.put(SERVER_IP, InetAddress.getLocalHost().getHostAddress());
-        }
+        String requestId = CodecUtil.createUUID();
+        log.info("requestId:{}, clientIp:{}, X-Forwarded-For:{}", requestId, httpServletRequest.getRemoteAddr(),
+                httpServletRequest.getHeader("X-Forwarded-For"));
+        MDC.put(REQUEST_ID, requestId);
+        MDC.put(SERVER_IP, InetAddress.getLocalHost().getHostAddress());
         return true;
     }
 
