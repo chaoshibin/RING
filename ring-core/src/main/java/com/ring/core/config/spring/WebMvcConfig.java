@@ -8,7 +8,7 @@ import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.view.BeanNameViewResolver;
 
 import java.util.ArrayList;
@@ -18,17 +18,15 @@ import java.util.List;
  * @author chaoshibin
  */
 @Configuration
-public class WebMvcConfigurer extends WebMvcConfigurerAdapter {
+public class WebMvcConfig implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(new WebHandlerInterceptor()).addPathPatterns("/**");
-        super.addInterceptors(registry);
+        registry.addInterceptor(new LogInterceptor()).addPathPatterns("/**");
     }
 
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
         //registry.addViewController("/login").setViewName("login");
-        super.addViewControllers(registry);
     }
 
     @Bean
@@ -39,7 +37,6 @@ public class WebMvcConfigurer extends WebMvcConfigurerAdapter {
 
     @Override
     public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
-
         MappingJackson2HttpMessageConverter converter = new MappingJackson2HttpMessageConverter();
         converter.setObjectMapper(JsonUtil.getObjectMapper());
         converters.add(converter);
@@ -47,6 +44,5 @@ public class WebMvcConfigurer extends WebMvcConfigurerAdapter {
         List<MediaType> list = new ArrayList<>();
         list.add(MediaType.APPLICATION_JSON_UTF8);
         converter.setSupportedMediaTypes(list);
-        super.configureMessageConverters(converters);
     }
 }

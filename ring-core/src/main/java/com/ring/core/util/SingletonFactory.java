@@ -1,5 +1,6 @@
 package com.ring.core.util;
 
+import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -11,7 +12,7 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public final class SingletonFactory {
 
-    private static ConcurrentHashMap<Class<?>, Object> beanFactory = new ConcurrentHashMap<>();
+    private static Map<Class<?>, Object> beanFactory = new ConcurrentHashMap<>();
 
     private SingletonFactory() {
 

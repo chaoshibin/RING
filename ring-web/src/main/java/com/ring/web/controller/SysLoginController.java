@@ -5,6 +5,7 @@ import com.google.code.kaptcha.Producer;
 import com.ring.api.model.sys.SysUser;
 import com.ring.core.annotion.Lockable;
 import com.ring.core.util.ShiroUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.IOUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
@@ -32,13 +33,15 @@ import java.io.IOException;
  * @date 2016年11月10日 下午1:15:31
  */
 @Controller
+@Slf4j
 public class SysLoginController extends AbstractController {
     @Autowired
     private Producer producer;
 
     @GetMapping(value = "/login")
-    @Lockable(prefix = "key", unique = "#sysUser.id")
+    //@Lockable(prefix = "key", unique = "#sysUser.id")
     public String login(String a, SysUser sysUser) {
+        log.info("输入参数 a={}",a);
         return "login";
     }
 

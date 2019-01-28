@@ -6,13 +6,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.text.ParseException;
+import java.util.Calendar;
 import java.util.Date;
 
 /**
  * @author chaoshibin
  */
 public final class DateUtil extends DateUtils {
-    private static final Logger LOG = LoggerFactory.getLogger(DateUtil.class);
+
     public static final String YYYY_MM_DD = "yyyy-MM-dd";
     public static final String YYYY_MM_DD_HH_MM_SS = "yyyy-MM-dd HH:mm:ss";
     public static final String YYYY_MM_DD_HH_MM = "yyyy-MM-dd HH:mm";
@@ -111,9 +112,16 @@ public final class DateUtil extends DateUtils {
         try {
             date = FastDateFormat.getInstance(pattern).parse(dateStr);
         } catch (ParseException e) {
-            LOG.error("parse Date failure", e);
             throw new RuntimeException(e);
         }
         return date;
+    }
+
+    public static Date dateOfBegin(Date date){
+        return truncate(date, Calendar.DATE);
+    }
+
+    public static Date dateOfEnd(Date date){
+        return ceiling(date, Calendar.DATE);
     }
 }
