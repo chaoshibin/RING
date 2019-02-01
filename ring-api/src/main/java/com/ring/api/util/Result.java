@@ -3,6 +3,7 @@ package com.ring.api.util;
 import com.ring.api.constant.ResultEnum;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 /**
  * @author CHAO
@@ -35,6 +36,10 @@ public class Result<T> implements Serializable {
         return Result.create(ResultEnum.OK.getCode(), "成功", value);
     }
 
+    public static <T> Result ok(String msg, T value) {
+        return Result.create(ResultEnum.OK.getCode(), msg, value);
+    }
+
     public static Result error(String msg) {
         return Result.create(ResultEnum.ERROR.getCode(), msg);
     }
@@ -60,15 +65,15 @@ public class Result<T> implements Serializable {
     }
 
     public boolean isOk() {
-        return ResultEnum.OK.getCode().equals(this.code);
+        return Objects.equals(ResultEnum.OK.getCode(), this.code);
     }
 
     public boolean isError() {
-        return ResultEnum.ERROR.getCode().equals(this.code);
+        return Objects.equals(ResultEnum.ERROR.getCode(), this.code);
     }
 
     public boolean isRetry() {
-        return ResultEnum.RETRY.getCode().equals(this.code);
+        return Objects.equals(ResultEnum.RETRY.getCode(), this.code);
     }
 
     public String getCode() {
