@@ -47,10 +47,10 @@
             <!-- 除按日志记录之外，还配置了日志文件不能超过2M，若超过2M，日志文件会以索引0开始，
             命名日志文件，例如log-error-2013-12-21.0.log -->
             <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
-                <maxFileSize>200MB</maxFileSize>
+                <maxFileSize>512MB</maxFileSize>
             </timeBasedFileNamingAndTriggeringPolicy>
-            <!--  保留60天日志 -->
-            <maxHistory>60</maxHistory>
+            <!--  保留90天日志 -->
+            <maxHistory>90</maxHistory>
         </rollingPolicy>
         <!-- 追加方式记录日志 -->
         <append>true</append>
@@ -79,10 +79,10 @@
             <!-- 除按日志记录之外，还配置了日志文件不能超过2M，若超过2M，日志文件会以索引0开始，
             命名日志文件，例如log-error-2013-12-21.0.log -->
             <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
-                <maxFileSize>200MB</maxFileSize>
+                <maxFileSize>512MB</maxFileSize>
             </timeBasedFileNamingAndTriggeringPolicy>
-            <!--  保留60天日志 -->
-            <maxHistory>60</maxHistory>
+            <!--  保留90天日志 -->
+            <maxHistory>90</maxHistory>
         </rollingPolicy>
         <!-- 追加方式记录日志 -->
         <append>true</append>
@@ -111,10 +111,10 @@
             <!-- 除按日志记录之外，还配置了日志文件不能超过2M，若超过2M，日志文件会以索引0开始，
             命名日志文件，例如log-error-2013-12-21.0.log -->
             <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
-                <maxFileSize>200MB</maxFileSize>
+                <maxFileSize>512MB</maxFileSize>
             </timeBasedFileNamingAndTriggeringPolicy>
-            <!--  保留60天日志 -->
-            <maxHistory>60</maxHistory>
+            <!--  保留90天日志 -->
+            <maxHistory>90</maxHistory>
         </rollingPolicy>
         <!-- 追加方式记录日志 -->
         <append>true</append>
@@ -144,10 +144,10 @@
             <!-- 除按日志记录之外，还配置了日志文件不能超过2M，若超过2M，日志文件会以索引0开始，
             命名日志文件，例如log-error-2013-12-21.0.log -->
             <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
-                <maxFileSize>200MB</maxFileSize>
+                <maxFileSize>512MB</maxFileSize>
             </timeBasedFileNamingAndTriggeringPolicy>
-            <!--  保留60天日志 -->
-            <maxHistory>60</maxHistory>
+            <!--  保留90天日志 -->
+            <maxHistory>90</maxHistory>
         </rollingPolicy>
         <!-- 追加方式记录日志 -->
         <append>true</append>
