@@ -2,6 +2,7 @@ package com.ring.core.util;
 
 import com.google.common.base.Charsets;
 import com.google.common.primitives.Longs;
+import com.ring.common.util.DateUtil;
 import com.ring.common.util.JsonUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.DateFormatUtils;
@@ -67,6 +68,28 @@ public final class RedisUtil {
         String extendSequence = StringUtils.leftPad(String.valueOf(sequence), size - 8, '0');
         String serialNo = todayStr + extendSequence;
         return serialNo;
+    }
+
+        /**
+     *
+     * @param type 取值1-99
+     * @param size
+     * @return
+     */
+    public static String createSerialNo(SerialTypeEnum type, Integer size) {
+        String typePad = StringUtils.leftPad(String.valueOf(type.getType()), 2, '0');
+        String redisKey = "currentDate" + "-" + typePad;
+        String todayStr = DateUtil.formatYMDWithoutSeparate(new Date());
+        String oldTodayStr = redisTemplate.opsForValue().get(redisKey);
+        if (StringUtils.isNotBlank(oldTodayStr)) {
+            if (Integer.parseInt(todayStr) > Integer.parseInt(oldTodayStr)) {
+                redisTemplate.opsForValue().set(redisKey, todayStr);
+                redisTemplate.delete(redisKey);
+            }
+        }
+        Long sequence = redisTemplate.opsForValue().increment(redisKey, 1L);
+        String extendSequence = StringUtils.leftPad(String.valueOf(sequence), size - 10, '0');
+        return todayStr + typePad + extendSequence;
     }
 
     public static boolean tryGetDistributedLock(String key) {
