@@ -26,7 +26,7 @@
     <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
         <!--encoder 默认配置为PatternLayoutEncoder-->
         <encoder>
-            <pattern>%d [%thread] %-5level requestID:%X{requestId} serverIp: %X{serverIp} %logger.%M Line:%-3L - %msg%n</pattern>
+            <pattern>%d [%thread] %-5level requestId:%X{requestId} serverIp: %X{serverIp} %logger.%M Line:%-3L - %msg%n</pattern>
             <charset>utf-8</charset>
         </encoder>
         <!--此日志appender是为开发使用，只配置最底级别，控制台输出的日志级别是大于或等于此级别的日志信息-->
@@ -56,7 +56,7 @@
         <append>true</append>
         <!-- 日志文件的格式 -->
         <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
-            <pattern>%d [%thread] %-5level requestID:%X{requestId} serverIp: %X{serverIp} %logger.%M Line:%-3L - %msg%n</pattern>
+            <pattern>%d [%thread] %-5level requestId:%X{requestId} serverIp: %X{serverIp} %logger.%M Line:%-3L - %msg%n</pattern>
             <charset>utf-8</charset>
         </encoder>
         <!-- 此日志文件只记录debug级别的 -->
@@ -88,7 +88,7 @@
         <append>true</append>
         <!-- 日志文件的格式 -->
         <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
-            <pattern>%d [%thread] %-5level requestID:%X{requestId} serverIp: %X{serverIp} %logger.%M Line:%-3L - %msg%n</pattern>
+            <pattern>%d [%thread] %-5level requestId:%X{requestId} serverIp: %X{serverIp} %logger.%M Line:%-3L - %msg%n</pattern>
             <charset>utf-8</charset>
         </encoder>
         <!-- 此日志文件只记录info级别的 -->
@@ -153,7 +153,7 @@
         <append>true</append>
         <!-- 日志文件的格式 -->
         <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
-            <pattern>%d [%thread] %-5level requestID:%X{requestId} serverIp: %X{serverIp} %logger.%M Line:%-3L - %msg%n</pattern>
+            <pattern>%d [%thread] %-5level requestId:%X{requestId} serverIp: %X{serverIp} %logger.%M Line:%-3L - %msg%n</pattern>
             <charset>utf-8</charset>
         </encoder>
         <!-- 此日志文件只记录error级别的 -->
