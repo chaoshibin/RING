@@ -41,7 +41,7 @@ public class Result<T> implements Serializable {
     }
 
     public static Result error(String msg) {
-        return Result.create(ResultEnum.ERROR.getCode(), msg);
+        return Result.create(ResultEnum.ERROR.getCode(), msg, null);
     }
 
     public static <T> Result error(String msg, T value) {
@@ -49,7 +49,7 @@ public class Result<T> implements Serializable {
     }
 
     public static Result retry(String msg) {
-        return Result.create(ResultEnum.RETRY.getCode(), msg);
+        return Result.create(ResultEnum.RETRY.getCode(), msg, null);
     }
 
     public static <T> Result retry(String msg, T value) {
