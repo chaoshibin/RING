@@ -44,7 +44,7 @@
         <shiro.version>1.3.2</shiro.version>
         <curator-recipes.version>4.0.1</curator-recipes.version>
         <zkclient.version>0.10</zkclient.version>
-        <quartz.version>2.2.1</quartz.version>
+        <quartz.version>2.3.2</quartz.version>
         <kaptcha.version>0.0.9</kaptcha.version>
         <lombok.version>1.16.20</lombok.version>
         <googleauth.version>0.5.0</googleauth.version>
